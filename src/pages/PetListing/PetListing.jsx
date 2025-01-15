@@ -1,6 +1,5 @@
 
-
-const Login = () => {
+const PetListing = () => {
     return (
         <div>
 
@@ -8,4 +7,4 @@ const Login = () => {
     );
 };
 
-export default Login;
+export default PetListing;
