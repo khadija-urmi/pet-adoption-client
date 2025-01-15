@@ -1,15 +1,18 @@
 import { Button, Card, FileInput, Label, TextInput } from "flowbite-react";
 import Lottie from "lottie-react";
 import registerLottie from "../../assets/lottie/register.json"
-import { Link } from "react-router-dom";
+import { Link, useNavigation } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
 import useAuth from "../../hooks/useAuth";
 import { useState } from "react";
 import toast from "react-hot-toast";
+import { uploadImageToServer } from "../../api/utils";
+import useAxiosPublic from "../../hooks/useAxiosPublic";
 
 const SignUp = () => {
-    const { signUpNewUser } = useAuth();
-    //const navigate = useNavigation()
+    const { signUpNewUser, updateUserProfile } = useAuth();
+    const axiosPublic = useAxiosPublic();
+    const navigate = useNavigation()
     const [errorMsg, setErrorMsg] = useState("");
     const [formData, setFormData] = useState({
         name: '',
@@ -21,7 +24,6 @@ const SignUp = () => {
     const handleInputChange = (e) => {
         const { name, value } = e.target;
         setFormData({ ...formData, [name]: value });
-        console.log("hit input")
     }
 
     const handleFileChange = (e) => {
@@ -29,7 +31,6 @@ const SignUp = () => {
             ...formData,
             image: e.target.files[0],
         })
-        console.log("hit file")
     }
     const validationPassword = (password) => {
         const hasUpperCase = /[A-Z]/.test(password);
@@ -43,34 +44,39 @@ const SignUp = () => {
     const handleSubmit = async (event) => {
         event.preventDefault();
         const { name, email, password, image } = formData;
-        console.log("filed val", name, email, password, image);
+        //upload img to hosting
+        const imageURL = await uploadImageToServer(image);
+        console.log("filed value", name, email, password, imageURL);
 
         const passwordValidated = validationPassword(password);
         if (passwordValidated) {
             setErrorMsg(passwordValidated);
-            console.log('hit pass')
             return;
         }
         setErrorMsg("");
         try {
             await signUpNewUser(email, password)
-                .then((res) => {
-                    const user = res.user;
-                    console.log("sign uppp", user)
-                    toast.success('Successfully logIn!')
+            await updateUserProfile(name, imageURL)
+            console.log("update user successfully",)
+            setFormData({ name: "", email: "", password: "", image: null });
+            const userInfo = {
+                name: name,
+                email: email
+            }
+            console.log("userInfo", userInfo)
+            axiosPublic.post('/users', userInfo)
+                .then(res => {
+                    if (res.data.insertedId) {
+                        console.log('user added to the database')
+                        toast.success('Successfully Sign Up!')
+                    }
                 })
-                .catch((error) => {
-                    setErrorMsg(error.message)
-                    console.log("error", errorMsg)
-                })
+            navigate('/login')
         }
         catch (err) {
-            //TODO: err thing
             console.log(err)
         }
     }
-
-
     return (
         <>
             <Helmet>
@@ -122,6 +128,9 @@ const SignUp = () => {
                                     onChange={handleInputChange}
                                     required />
                             </div>
+                            {errorMsg && (
+                                <div className="mt-4 text-sm
+                     text-red-600">{errorMsg}</div>)}
                             <Button type="submit" className="bg-purple-500">Submit</Button>
                             <p>Already have an account? <Link to='/login' className=" text-blue-500 font-semibold">
                                 Login
