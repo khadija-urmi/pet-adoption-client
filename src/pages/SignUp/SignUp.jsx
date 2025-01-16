@@ -1,82 +1,55 @@
 import { Button, Card, FileInput, Label, TextInput } from "flowbite-react";
 import Lottie from "lottie-react";
-import registerLottie from "../../assets/lottie/register.json"
-import { Link, useNavigation } from "react-router-dom";
+import registerLottie from "../../assets/lottie/register.json";
+import { Link, useNavigate } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
 import useAuth from "../../hooks/useAuth";
 import { useState } from "react";
 import toast from "react-hot-toast";
 import { uploadImageToServer } from "../../api/utils";
 import useAxiosPublic from "../../hooks/useAxiosPublic";
+import { useForm } from "react-hook-form";
 
 const SignUp = () => {
     const { signUpNewUser, updateUserProfile } = useAuth();
     const axiosPublic = useAxiosPublic();
-    const navigate = useNavigation()
+    const navigate = useNavigate();
     const [errorMsg, setErrorMsg] = useState("");
-    const [formData, setFormData] = useState({
-        name: '',
-        email: '',
-        password: '',
-        image: null,
-    });
+    const { register, handleSubmit, formState: { errors }, setValue } = useForm();
+    const [image, setImage] = useState(null);
 
-    const handleInputChange = (e) => {
-        const { name, value } = e.target;
-        setFormData({ ...formData, [name]: value });
-    }
 
     const handleFileChange = (e) => {
-        setFormData({
-            ...formData,
-            image: e.target.files[0],
-        })
+        const file = e.target.files[0];
+        setImage(file);
+        setValue("image", file);
     }
-    const validationPassword = (password) => {
-        const hasUpperCase = /[A-Z]/.test(password);
-        const hasLowerCase = /[a-z]/.test(password);
-        const hasPasswordLength = password.length >= 6;
 
-        if (!hasUpperCase) return "Password must have at least one uppercase letter.";
-        if (!hasLowerCase) return "Password must have at least one lowercase letter.";
-        if (!hasPasswordLength) return "Password must be at least 6 characters long.";
-    }
-    const handleSubmit = async (event) => {
-        event.preventDefault();
-        const { name, email, password, image } = formData;
-        //upload img to hosting
+    const onSubmit = async (data) => {
+        const { name, email, password } = data;
         const imageURL = await uploadImageToServer(image);
-        console.log("filed value", name, email, password, imageURL);
 
-        const passwordValidated = validationPassword(password);
-        if (passwordValidated) {
-            setErrorMsg(passwordValidated);
-            return;
-        }
         setErrorMsg("");
         try {
-            await signUpNewUser(email, password)
-            await updateUserProfile(name, imageURL)
-            console.log("update user successfully",)
-            setFormData({ name: "", email: "", password: "", image: null });
-            const userInfo = {
-                name: name,
-                email: email
-            }
-            console.log("userInfo", userInfo)
+            await signUpNewUser(email, password);
+            await updateUserProfile(name, imageURL);
+            console.log("User updated successfully");
+
+            const userInfo = { name, email };
             axiosPublic.post('/users', userInfo)
                 .then(res => {
                     if (res.data.insertedId) {
-                        console.log('user added to the database')
-                        toast.success('Successfully Sign Up!')
+                        console.log('User added to the database');
+                        toast.success('Successfully Signed Up!');
                     }
-                })
-            navigate('/login')
+                });
+
+            navigate('/login');
+        } catch (err) {
+            console.log(err);
         }
-        catch (err) {
-            console.log(err)
-        }
-    }
+    };
+
     return (
         <>
             <Helmet>
@@ -86,55 +59,84 @@ const SignUp = () => {
                 <div className="w-full lg:w-1/2 flex items-center justify-center">
                     <Lottie animationData={registerLottie} className="w-3/4" />
                 </div>
-                {/* Registration Form Section */}
                 <div className="w-full lg:max-w-md flex-1 items-center justify-center">
                     <h2 className="text-2xl font-medium text-gray-800 text-center mb-6">Register Form</h2>
                     <Card>
-                        <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+                        <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
                             <div>
                                 <div className="mb-2 block">
                                     <Label htmlFor="name" value="Name" />
                                 </div>
-                                <TextInput id="name"
+                                <TextInput
+                                    id="name"
                                     name="name"
                                     type="text"
-                                    value={formData.name}
-                                    onChange={handleInputChange} placeholder="Your Full Name" required />
+                                    {...register("name", { required: "Name is required" })}
+                                    placeholder="Your Full Name"
+                                />
+                                {errors.name && <p className="text-red-500 text-sm">{errors.name.message}</p>}
                             </div>
                             <div>
                                 <div className="mb-2 block">
-                                    <Label htmlFor="email1" value="Email" />
+                                    <Label htmlFor="email" value="Email" />
                                 </div>
-                                <TextInput id="email"
-                                    type="email"
+                                <TextInput
+                                    id="email"
                                     name="email"
-                                    value={formData.email}
-                                    onChange={handleInputChange} placeholder="Your Email" required />
+                                    type="email"
+                                    {...register("email", {
+                                        required: "Email is required"
+                                    })}
+                                    placeholder="Your Email"
+                                />
+                                {errors.email && <p className="text-red-500 text-sm">{errors.email.message}</p>}
                             </div>
                             <div>
                                 <div className="mb-2 block">
-                                    <Label htmlFor="file-upload-helper-text" value="Select Image:" />
+                                    <Label htmlFor="image" value="Select Image:" />
                                 </div>
-                                <FileInput id="file-upload-helper-text" name="image"
-                                    onChange={handleFileChange} />
+                                <FileInput
+                                    id="image"
+                                    name="image"
+                                    onChange={handleFileChange}
+                                />
                             </div>
                             <div>
                                 <div className="mb-2 block">
-                                    <Label htmlFor="password1" value="Password" />
+                                    <Label htmlFor="password" value="Password" />
                                 </div>
-                                <TextInput id="password1" name="password"
+
+                                <TextInput
                                     type="password"
-                                    value={formData.password}
-                                    onChange={handleInputChange}
-                                    required />
+                                    {...register("password", {
+                                        required: "Password is required",
+                                        minLength: {
+                                            value: 6,
+                                            message: "Password must be at least 6 characters",
+                                        },
+                                        maxLength: {
+                                            value: 20,
+                                            message: "Password must be less than 20 characters",
+                                        },
+                                        pattern: {
+                                            value: /(?=.*[A-Z])(?=.*[!@#$&*])(?=.*[0-9])(?=.*[a-z])/,
+                                            message: "Password must have one Uppercase, one lowercase, one number, and one special character.",
+                                        },
+                                    })}
+                                    placeholder="Password"
+                                    className="input input-bordered"
+                                />
+                                {errors.password && (
+                                    <p className="text-red-600">{errors.password.message}</p>
+                                )}
+
                             </div>
                             {errorMsg && (
-                                <div className="mt-4 text-sm
-                     text-red-600">{errorMsg}</div>)}
+                                <div className="mt-4 text-sm text-red-600">{errorMsg}</div>
+                            )}
                             <Button type="submit" className="bg-purple-500">Submit</Button>
-                            <p>Already have an account? <Link to='/login' className=" text-blue-500 font-semibold">
-                                Login
-                            </Link>
+                            <p>Already have an account?
+                                <Link to='/login' className="text-blue-500 font-semibold"> Login</Link>
                             </p>
                         </form>
                     </Card>
@@ -143,4 +145,5 @@ const SignUp = () => {
         </>
     );
 };
+
 export default SignUp;
