@@ -9,15 +9,22 @@ import toast from "react-hot-toast";
 import { uploadImageToServer } from "../../api/utils";
 import useAxiosPublic from "../../hooks/useAxiosPublic";
 import { useForm } from "react-hook-form";
+import { FaLock, FaUser } from "react-icons/fa";
+import { MdEmail } from "react-icons/md";
+import { LuEye, LuEyeClosed } from "react-icons/lu";
 
 const SignUp = () => {
     const { signUpNewUser, updateUserProfile } = useAuth();
     const axiosPublic = useAxiosPublic();
     const navigate = useNavigate();
     const [errorMsg, setErrorMsg] = useState("");
+    const [seePassword, setSeePassword] = useState(false);
     const { register, handleSubmit, formState: { errors }, setValue } = useForm();
     const [image, setImage] = useState(null);
 
+    const passwordVisibility = () => {
+        setSeePassword(!seePassword);
+    };
 
     const handleFileChange = (e) => {
         const file = e.target.files[0];
@@ -71,6 +78,7 @@ const SignUp = () => {
                                     id="name"
                                     name="name"
                                     type="text"
+                                    icon={FaUser}
                                     {...register("name", { required: "Name is required" })}
                                     placeholder="Your Full Name"
                                 />
@@ -84,11 +92,13 @@ const SignUp = () => {
                                     id="email"
                                     name="email"
                                     type="email"
+                                    icon={MdEmail}
                                     {...register("email", {
                                         required: "Email is required"
                                     })}
                                     placeholder="Your Email"
                                 />
+
                                 {errors.email && <p className="text-red-500 text-sm">{errors.email.message}</p>}
                             </div>
                             <div>
@@ -101,13 +111,14 @@ const SignUp = () => {
                                     onChange={handleFileChange}
                                 />
                             </div>
-                            <div>
+                            <div className="relative">
                                 <div className="mb-2 block">
                                     <Label htmlFor="password" value="Password" />
                                 </div>
 
                                 <TextInput
-                                    type="password"
+                                    type={seePassword ? "text" : "password"}
+                                    icon={FaLock}
                                     {...register("password", {
                                         required: "Password is required",
                                         minLength: {
@@ -126,13 +137,18 @@ const SignUp = () => {
                                     placeholder="Password"
                                     className="input input-bordered"
                                 />
+                                <div onClick={passwordVisibility} className="absolute right-3 top-3/4  bottom-1transform -translate-y-1/2 text-gray-500">
+                                    {
+                                        seePassword ? <LuEye /> : <LuEyeClosed />
+                                    }
+                                </div>
                                 {errors.password && (
                                     <p className="text-red-600">{errors.password.message}</p>
                                 )}
 
                             </div>
                             {errorMsg && (
-                                <div className="mt-4 text-sm text-red-600">{errorMsg}</div>
+                                <div className="mt-2 text-sm text-red-600">{errorMsg}</div>
                             )}
                             <Button type="submit" className="bg-purple-500">Submit</Button>
                             <p>Already have an account?
