@@ -30,8 +30,7 @@ const Navbar = () => {
         <li>
             <NavLink to="/donation" className={getNavLinkClass}>Donation For Pet</NavLink>
         </li>
-    </>
-
+    </>;
 
     return (
         <nav className="bg-white border-gray-200 dark:bg-gray-900">
@@ -40,6 +39,7 @@ const Navbar = () => {
                     <img src={logoImg} className="w-16 md:w-20 h-10" alt="Flowbite Logo" />
                     <span className="self-center text-xl md:text-2xl font-semibold whitespace-nowrap dark:text-white">WoofWow</span>
                 </div>
+
                 {/* User image and dropdown */}
                 <div className="flex items-center md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse">
                     {currentUser ? (
@@ -79,14 +79,12 @@ const Navbar = () => {
                             </div>
                         </>
                     ) : (
-                        <div className="hidden md:flex  justify-center items-center  space-x-2">
+                        <div className="hidden md:flex justify-center items-center space-x-2">
                             <NavLink to="/login">
                                 <button type="button" className="text-white bg-gradient-to-r from-cyan-400 via-cyan-500 to-cyan-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-cyan-300 dark:focus:ring-cyan-800 shadow-lg shadow-cyan-500/50 dark:shadow-lg dark:shadow-cyan-800/80 font-medium rounded-lg text-sm px-3 py-2 lg:px-5 lg:py-2.5 text-center me-2 mb-2">Log In</button>
                             </NavLink>
                             <NavLink to="/signup">
-                                <button className="text-white bg-gradient-to-r from-cyan-400 via-cyan-500 to-cyan-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-cyan-300 dark:focus:ring-cyan-800 shadow-lg shadow-cyan-500/50 dark:shadow-lg dark:shadow-cyan-800/80 font-medium rounded-lg text-sm px-3 py-2 lg:px-5 lg:py-2.5 text-center me-2 mb-2">
-                                    Register
-                                </button>
+                                <button className="text-white bg-gradient-to-r from-cyan-400 via-cyan-500 to-cyan-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-cyan-300 dark:focus:ring-cyan-800 shadow-lg shadow-cyan-500/50 dark:shadow-lg dark:shadow-cyan-800/80 font-medium rounded-lg text-sm px-3 py-2 lg:px-5 lg:py-2.5 text-center me-2 mb-2">Register</button>
                             </NavLink>
                         </div>
                     )}
@@ -100,20 +98,22 @@ const Navbar = () => {
                         {menuOpen ? <IoMdClose /> : <IoMdMenu />}
                     </button>
                 </div>
-                {/*  for mobile */}
-                <div className={`z-50 absolute  left-0 right-0 top-12 bg-white shadow-lg p-2 rounded-lg ${menuOpen ? "" : "hidden"}`} >
+
+                {/* For small devices (Dropdown) */}
+                {menuOpen && <div className={`absolute left-0 right-0 top-12 bg-white shadow-lg p-2  rounded-lg ${menuOpen ? "" : "hidden"}`} >
                     <ul className="flex flex-col space-y-2 font-medium p-4 mt-2 border border-gray-100 rounded-lg bg-gray-200 rtl:space-x-reverse ">
                         {links}
                         <li>
-                            <NavLink to="/login" className={getNavLinkClass} aria-current="page">Log In</NavLink>
+                            <NavLink to="/login" className={getNavLinkClass}>Log In</NavLink>
                         </li>
                         <li>
-                            <NavLink to="/signup" className={getNavLinkClass} aria-current="page">Registet</NavLink>
+                            <NavLink to="/signup" className={getNavLinkClass}>Register</NavLink>
                         </li>
                     </ul>
-                </div>
+                </div>}
+
                 {/* Flex layout for large devices */}
-                <div className="items-center justify-between hidden w-full md:flex md:w-auto md:order-1" id="navbar-user">
+                <div className={`items-center justify-between hidden w-full md:flex md:text-sm lg:text-base md:w-auto md:order-1 ${menuOpen ? "hidden" : ""}`} id="navbar-user">
                     <ul className="flex md:flex-row font-medium p-4 md:p-0 mt-4 md:space-x-8 rtl:space-x-reverse md:mt-0 md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
                         {links}
                     </ul>

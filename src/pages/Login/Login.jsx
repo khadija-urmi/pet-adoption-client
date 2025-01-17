@@ -52,12 +52,12 @@ const Login = () => {
             <Helmet>
                 <title>WoofWow | LogIn</title>
             </Helmet>
-            <Card className="max-w-md mx-auto w-full bg-white  shadow-lg mt-12">
+            <Card className="max-w-md mx-auto w-full bg-gray-100 shadow-xl mt-6">
                 <h2 className="text-3xl font-semibold text-center ">Login</h2>
                 <p className="font-bold text-center">New User?
                     <Link to='/signup' className="text-blue-500 font-semibold"> Sign Up</Link>
                 </p>
-                <form onSubmit={handleSubmit(onSubmit)} className="w-full flex flex-col gap-4 p-4">
+                <form onSubmit={handleSubmit(onSubmit)} className="w-full flex flex-col gap-3 p-3">
                     <div>
                         <div className="mb-4 block ">
                             <Label htmlFor="email1" value="Email Address" />
