@@ -3,26 +3,66 @@ import { FaGithub } from "react-icons/fa";
 import toast from "react-hot-toast";
 import useAuth from "../../hooks/useAuth";
 import useAxiosPublic from "../../hooks/useAxiosPublic";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const SocialLogIn = () => {
     const { googleSignUp, gitHubLogIn } = useAuth();
     const axiosPublic = useAxiosPublic();
+    const navigate = useNavigate();
+    const location = useLocation();
+
+    const from = location.state?.from?.pathname || "/";
+
     const handleGoogleLogIn = () => {
         googleSignUp()
             .then(result => {
-                console.log(result.user);
                 const userInfo = {
+                    name: result.user?.displayName,
                     email: result.user?.email,
-                    name: result.user?.displayName
                 }
-                console.log("user info", userInfo)
-                toast.success("Successfully Log In Google")
-                return axiosPublic.post('/users', userInfo)
+
+                axiosPublic.post('/users', userInfo)
+                    .then(res => {
+                        if (res.data.insertedId) {
+                            toast.success('Successfully Signed Up!');
+                            navigate(from, { replace: true });
+                        }
+                    })
+                    .catch(error => {
+                        toast.error(`Error adding user to database: ${error.message}`);
+                    });
             })
-    }
+            .catch((error) => {
+                const errorMessage = error.message;
+                toast.error(`Login failed, ${errorMessage}`);
+            });
+    };
+
     const handleGitHubLogIn = () => {
-        console.log("github login")
-    }
+        gitHubLogIn()
+            .then(result => {
+                const userInfo = {
+                    name: result.user?.displayName,
+                    email: result.user?.email,
+                }
+
+                axiosPublic.post('/users', userInfo)
+                    .then(res => {
+                        if (res.data.insertedId) {
+                            toast.success("Successfully Logged In with GitHub");
+                            navigate(from, { replace: true });
+                        }
+                    })
+                    .catch(error => {
+                        toast.error(`Error adding user to database: ${error.message}`);
+                    });
+            })
+            .catch((error) => {
+                const errorMessage = error.message;
+                toast.error(`Login failed, ${errorMessage}`);
+            });
+    };
+
     return (
         <div className="w-full max-w-md mx-auto">
             <div className="my-2 border-b text-center">

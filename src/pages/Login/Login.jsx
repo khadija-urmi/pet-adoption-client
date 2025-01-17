@@ -39,7 +39,6 @@ const Login = () => {
                 .catch((error) => {
                     const errorMessage = error.message;
                     toast.error(`Login failed,${errorMessage}`);
-
                 });
         } catch (err) {
             console.log(err)
