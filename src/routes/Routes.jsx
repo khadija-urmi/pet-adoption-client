@@ -6,6 +6,7 @@ import DonationCampaign from "../pages/DonationCampaign/DonationCampaign";
 import About from "../pages/Home/About/About";
 import Login from "../pages/Login/Login";
 import SignUp from "../pages/SignUp/SignUp";
+import AddPage from "../pages/AddPage/AddPage";
 
 export const router = createBrowserRouter([
   {
@@ -35,6 +36,10 @@ export const router = createBrowserRouter([
       {
         path: "/signup",
         element: <SignUp />
+      },
+      {
+        path: '/add-page',
+        element: <AddPage></AddPage>
       }
     ],
   },
