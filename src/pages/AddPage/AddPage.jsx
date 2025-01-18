@@ -3,17 +3,26 @@ import Select from 'react-select';
 import { uploadImageToServer } from "../../api/utils";
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
+import useAxiosPublic from '../../hooks/useAxiosPublic';
+import toast from 'react-hot-toast';
+import { ImSpinner9 } from 'react-icons/im';
+
 
 const AddPage = () => {
+    const axiosPublic = useAxiosPublic();
     const categories = [
         { label: 'Dog', value: 'dog' },
         { label: 'Cat', value: 'cat' },
         { label: 'Bird', value: 'bird' },
         { label: 'Rabbit', value: 'rabbit' },
-        { label: 'Reptile', value: 'reptile' },
-        { label: 'Fish', value: 'reptile' },
         { label: 'Fish', value: 'fish' },
     ];
+
+    function getLongDescription(html) {
+        const divContainer = document.createElement("div");
+        divContainer.innerHTML = html;
+        return divContainer.textContent || divContainer.innerText || "";
+    }
 
     return (
         <div className="flex justify-center items-center min-h-screen bg-gradient-to-r from-blue-100 via-blue-200 to-blue-300">
@@ -39,24 +48,46 @@ const AddPage = () => {
                         if (!values.longDescription) errors.longDescription = 'Long description is required';
                         return errors;
                     }}
+
                     onSubmit={async (values, { setSubmitting, resetForm, setFieldError }) => {
+                        console.log("this is values", { values })
                         try {
                             // Upload image
                             const imageUrl = await uploadImageToServer(values.petImage);
+                            const petFullDetails = await getLongDescription(values.longDescription);
                             if (!imageUrl) {
                                 setFieldError('petImage', 'Image upload failed');
                                 setSubmitting(false);
                                 return;
                             }
-
+                            if (!petFullDetails) {
+                                setFieldError("failed to get text");
+                                setSubmitting(false);
+                                return
+                            }
+                            const { longDescription, ...remainingValues } = values;
+                            console.log("long descrip", longDescription)
+                            console.log("value", remainingValues)
                             const petData = {
-                                ...values,
+                                ...remainingValues,
                                 petImage: imageUrl,
+                                petFullDetail: petFullDetails,
                                 addedAt: new Date().toISOString(),
                                 adopted: false,
                             };
 
                             console.log('Adding pet:', petData);
+                            axiosPublic.post('/pets', petData)
+                                .then(res => {
+                                    console.log(res.data)
+                                    if (res.data.insertedId) {
+                                        toast.success("Sucessfully Inserted Pet Info")
+                                    }
+                                })
+                                .catch(err => {
+                                    console.log(err)
+                                    toast.error("Failed!")
+                                })
 
                             resetForm();
                             setSubmitting(false);
@@ -106,17 +137,17 @@ const AddPage = () => {
 
                             <div>
                                 <label className="block text-lg font-medium text-gray-700">Pet Category</label>
+                                {/* React Select */}
                                 <Select
                                     name="petCategory"
                                     options={categories}
-                                    onChange={(option) => setFieldValue('petCategory', option)}
+                                    onChange={(selectedOption) => setFieldValue('petCategory', selectedOption ? selectedOption.value : '')}
+                                    value={values.petCategory ? categories.find(option => option.value === values.petCategory) : null}
                                     onBlur={handleBlur}
-                                    value={values.petCategory}
-                                    className="w-full p-5 rounded-md shadow-sm"
+                                    className="w-full p-3 h-12 rounded-md shadow-sm"
                                 />
                                 {errors.petCategory && touched.petCategory && <div className="text-red-500 text-sm">{errors.petCategory}</div>}
                             </div>
-
                             <div>
                                 <label className="block text-lg font-medium text-gray-700">Pet Location</label>
                                 <input
@@ -142,10 +173,10 @@ const AddPage = () => {
                                 />
                                 {errors.shortDescription && touched.shortDescription && <div className="text-red-500 text-sm">{errors.shortDescription}</div>}
                             </div>
-
+                            {/* React Quil  */}
                             <div>
                                 <label className="block text-lg font-medium text-gray-700">Long Description</label>
-                                <ReactQuill
+                                <ReactQuill n
                                     value={values.longDescription}
                                     onChange={(content) => setFieldValue('longDescription', content)}
                                     className="w-full border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
@@ -172,7 +203,7 @@ const AddPage = () => {
                                 disabled={isSubmitting}
                                 className="w-full p-3 bg-blue-500 text-white font-bold rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
                             >
-                                {isSubmitting ? 'Submitting...' : 'Add Pet'}
+                                {isSubmitting ? <ImSpinner9 className="animate-spin text-white m-auto" /> : 'Add Pet'}
                             </button>
                         </form>
                     )}
