@@ -1,12 +1,18 @@
 import { Formik } from 'formik';
 import Select from 'react-select';
 import { uploadImageToServer } from "../../api/utils";
+import ReactQuill from 'react-quill';
+import 'react-quill/dist/quill.snow.css';
 
 const AddPage = () => {
     const categories = [
         { label: 'Dog', value: 'dog' },
         { label: 'Cat', value: 'cat' },
         { label: 'Bird', value: 'bird' },
+        { label: 'Rabbit', value: 'rabbit' },
+        { label: 'Reptile', value: 'reptile' },
+        { label: 'Fish', value: 'reptile' },
+        { label: 'Fish', value: 'fish' },
     ];
 
     return (
@@ -139,12 +145,10 @@ const AddPage = () => {
 
                             <div>
                                 <label className="block text-lg font-medium text-gray-700">Long Description</label>
-                                <textarea
-                                    name="longDescription"
-                                    onChange={handleChange}
-                                    onBlur={handleBlur}
+                                <ReactQuill
                                     value={values.longDescription}
-                                    className="w-full p-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                    onChange={(content) => setFieldValue('longDescription', content)}
+                                    className="w-full border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
                                 />
                                 {errors.longDescription && touched.longDescription && <div className="text-red-500 text-sm">{errors.longDescription}</div>}
                             </div>
