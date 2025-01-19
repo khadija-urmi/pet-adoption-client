@@ -1,5 +1,4 @@
 import { Button, Card, Label, TextInput } from "flowbite-react";
-import SocialLogIn from "../../components/SocialLogIn/SocialLogIn";
 import { useState } from "react";
 import toast from "react-hot-toast";
 import useAuth from "../../hooks/useAuth";
@@ -10,6 +9,7 @@ import { HiMail } from "react-icons/hi";
 import { LuEye } from "react-icons/lu";
 import { LuEyeClosed } from "react-icons/lu";
 import { Link, useLocation, useNavigate } from 'react-router-dom';
+import SocialLogIn from "../../components/SocialLogIn/SocialLogIn";
 
 const Login = () => {
     const { signIn } = useAuth();
@@ -93,9 +93,9 @@ const Login = () => {
                         {errors.password && <p className="text-red-500 text-sm">{errors.password.message}</p>}
                     </div>
                     <Button type="submit" className="bg-purple-500">Submit</Button>
-                    <SocialLogIn></SocialLogIn>
                 </form>
             </Card>
+            <SocialLogIn></SocialLogIn>
         </>
     );
 };

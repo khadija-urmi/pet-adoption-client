@@ -12,6 +12,7 @@ import { useForm } from "react-hook-form";
 import { FaLock, FaUser } from "react-icons/fa";
 import { MdEmail } from "react-icons/md";
 import { LuEye, LuEyeClosed } from "react-icons/lu";
+import SocialLogIn from "../../components/SocialLogIn/SocialLogIn";
 
 const SignUp = () => {
     const { signUpNewUser, updateUserProfile } = useAuth();
@@ -156,8 +157,10 @@ const SignUp = () => {
                             </p>
                         </form>
                     </Card>
+                    <SocialLogIn></SocialLogIn>
                 </div>
             </div>
+
         </>
     );
 };

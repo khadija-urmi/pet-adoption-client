@@ -2,6 +2,7 @@ import { createUserWithEmailAndPassword, getAuth, GoogleAuthProvider, GithubAuth
 import { createContext, useEffect, useState } from 'react';
 import { app } from '../firebase/firebase.config';
 import useAxiosPublic from '../hooks/useAxiosPublic';
+import PropTypes from 'prop-types';
 
 
 export const AuthContext = createContext(null);
@@ -38,9 +39,10 @@ const AuthProvider = ({ children }) => {
         });
     }
     useEffect(() => {
-        const unsubscribe = onAuthStateChanged(auth, user => {
-            setCurrentUser(user);
+        const unsubscribe = onAuthStateChanged(auth, (user) => {
+            setIsLoading(true);
             if (user) {
+                setCurrentUser(user);
                 const userInfo = { email: user.email };
                 axiosPublic.post('/jwt', userInfo)
                     .then(res => {
@@ -48,15 +50,20 @@ const AuthProvider = ({ children }) => {
                             localStorage.setItem('access-token', res.data.token);
                         }
                     })
+                    .catch((error) => {
+                        console.error('Error fetching token:', error);
+                    })
+                    .finally(() => setIsLoading(false));
             }
             else {
+                setCurrentUser(null);
                 localStorage.removeItem('access-token');
                 setIsLoading(false);
             }
         });
 
         return () => unsubscribe();
-    }, []);
+    }, [axiosPublic]);
 
     const userInfo = {
         currentUser,
@@ -76,5 +83,7 @@ const AuthProvider = ({ children }) => {
         </AuthContext.Provider>
     );
 };
-
+AuthProvider.propTypes = {
+    children: PropTypes.node.isRequired,
+};
 export default AuthProvider;

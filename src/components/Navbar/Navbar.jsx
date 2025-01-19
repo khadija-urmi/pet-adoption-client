@@ -1,6 +1,5 @@
-import { NavLink } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import logoImg from "../../assets/logo2.png";
-import user from "../../assets/user.png";
 import useAuth from "../../hooks/useAuth";
 import { IoMdClose, IoMdMenu } from "react-icons/io";
 import { useState } from "react";
@@ -12,6 +11,7 @@ const Navbar = () => {
 
     const toggleMenu = () => setMenuOpen(!menuOpen);
     const toggleDropdown = () => setIsDropdownOpen(!isDropdownOpen);
+
     const getNavLinkClass = ({ isActive }) =>
         isActive
             ? "py-2 px-3 text-blue-700 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700"
@@ -51,7 +51,7 @@ const Navbar = () => {
                                 onClick={toggleDropdown}
                             >
                                 <span className="sr-only">Open user menu</span>
-                                <img className="w-8 h-8 rounded-full" src={currentUser?.photoURL || user}
+                                <img className="w-8 h-8 rounded-full" src={currentUser?.photoURL}
                                     referrerPolicy="no-referrer"
                                     alt="user photo" />
                             </button>
@@ -65,15 +65,12 @@ const Navbar = () => {
                                     <span className="block text-sm text-gray-500 truncate dark:text-gray-400">{currentUser?.email}</span>
                                 </div>
                                 <ul className="py-2" aria-labelledby="user-menu-button">
-                                    <li>
-                                        <a href="#" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Dashboard</a>
-                                    </li>
-                                    <li>
-                                        <a href="#" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Settings</a>
-                                    </li>
-                                    <li>
-                                        <a href="#" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Earnings</a>
-                                    </li>
+                                    <Link to="dashboard" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Dashboard
+                                    </Link>
+                                    <Link to="add-page" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Add Page
+                                    </Link>
+                                    <Link to="my-profile" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">My Profile
+                                    </Link>
                                     <li>
                                         <button onClick={logOutUser} className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Sign Out</button>
                                     </li>
@@ -121,7 +118,7 @@ const Navbar = () => {
                     </ul>
                 </div>
             </div>
-        </nav>
+        </nav >
     );
 };
 

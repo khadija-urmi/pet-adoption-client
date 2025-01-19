@@ -35,12 +35,11 @@ const PetListing = () => {
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
                 {allPets.map((pet) => (
                     <div key={pet._id} className="bg-white p-4 rounded-lg shadow-lg">
-                        <img src={pet.petImage} alt="Pet Image" className="w-full h-52 object-fill rounded-lg" />
+                        <img src={pet.petImage} alt="Pet Image" className="w-full h-60 object-fill rounded-lg" />
                         <div className="mt-4">
                             <h3 className="text-xl font-semibold">{pet?.petName}</h3>
                             <p className="text-gray-600">Age: {pet?.petAge}</p>
                             <p className="text-gray-600 mb-4">Location: {pet?.petLocation}</p>
-                            {/* when button is click , it will go modal which is created in components */}
                             <Button onClick={() => openPetModal(pet)}>View Details</Button>
                         </div>
                     </div>

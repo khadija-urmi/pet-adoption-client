@@ -6,7 +6,14 @@ import DonationCampaign from "../pages/DonationCampaign/DonationCampaign";
 import About from "../pages/Home/About/About";
 import Login from "../pages/Login/Login";
 import SignUp from "../pages/SignUp/SignUp";
-import AddPage from "../pages/AddPage/AddPage";
+import PrivateRoute from "./PrivateRoute";
+import MyProfile from "../pages/MyProfile/MyProfile";
+import DashboardLayout from "../layouts/DashboardLayout";
+import Statistics from "../pages/Statistics/Statistics";
+import AddPet from "../pages/AddPet/AddPet";
+import AllUser from "../pages/Dashboard/AllUser/AllUser";
+import MyAddedPet from "../pages/Dashboard/MyAddedPet/MyAddedPet";
+import MyDonationCampaign from "../pages/Dashboard/MyDonationCampaign/MyDonationCampaign";
 
 export const router = createBrowserRouter([
   {
@@ -37,11 +44,65 @@ export const router = createBrowserRouter([
         path: "/signup",
         element: <SignUp />
       },
+    ]
+
+  },
+  {
+    path: '/dashboard',
+    element: (
+      <PrivateRoute>
+        <DashboardLayout />
+      </PrivateRoute>
+    ),
+    children: [
       {
-        path: '/add-page',
-        element: <AddPage></AddPage>
-      }
+        index: true,
+        element: (
+          <PrivateRoute>
+            <Statistics />
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: 'add-pet',
+        element: (
+          <PrivateRoute>
+            <AddPet />
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: 'all-users',
+        element: (
+          <PrivateRoute>
+            <AllUser />
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: 'my-profile',
+        element: (
+          <PrivateRoute>
+            <MyProfile />
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: 'my-pets',
+        element: (
+          <PrivateRoute>
+            <MyAddedPet />
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: 'add-donation',
+        element: <DonationCampaign />,
+      },
+      {
+        path: 'my-donation',
+        element: <MyDonationCampaign />,
+      },
     ],
   },
-
-]);
+])

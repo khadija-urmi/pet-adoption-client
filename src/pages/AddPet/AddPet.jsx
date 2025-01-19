@@ -8,7 +8,7 @@ import toast from 'react-hot-toast';
 import { ImSpinner9 } from 'react-icons/im';
 
 
-const AddPage = () => {
+const AddPet = () => {
     const axiosPublic = useAxiosPublic();
     const categories = [
         { label: 'Dog', value: 'dog' },
@@ -213,4 +213,4 @@ const AddPage = () => {
     );
 };
 
-export default AddPage;
+export default AddPet;
