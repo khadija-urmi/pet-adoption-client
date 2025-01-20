@@ -2,7 +2,7 @@ import { createBrowserRouter } from "react-router-dom";
 import MainLayout from "../layouts/MainLayout";
 import Home from "../pages/Home/Home/Home";
 import PetListing from "../pages/PetListing/PetListing";
-import DonationCampaign from "../pages/DonationCampaign/DonationCampaign";
+import DonationCampaign from "../pages/Dashboard/DonationCampaign/DonationCampaign";
 import About from "../pages/Home/About/About";
 import Login from "../pages/Login/Login";
 import SignUp from "../pages/SignUp/SignUp";
@@ -10,10 +10,12 @@ import PrivateRoute from "./PrivateRoute";
 import MyProfile from "../pages/MyProfile/MyProfile";
 import DashboardLayout from "../layouts/DashboardLayout";
 import Statistics from "../pages/Statistics/Statistics";
-import AddPet from "../pages/AddPet/AddPet";
+import AddPet from "../pages/Dashboard/AddPet/AddPet";
 import AllUser from "../pages/Dashboard/AllUser/AllUser";
 import MyAddedPet from "../pages/Dashboard/MyAddedPet/MyAddedPet";
 import MyDonationCampaign from "../pages/Dashboard/MyDonationCampaign/MyDonationCampaign";
+import AdoptionRequest from "../pages/Dashboard/AdoptionRequest/AdoptionRequest";
+import MyDonation from "../pages/Dashboard/MyDonation/MyDonation";
 
 export const router = createBrowserRouter([
   {
@@ -96,12 +98,20 @@ export const router = createBrowserRouter([
         ),
       },
       {
+        path: 'adoption-request',
+        element: <AdoptionRequest />
+      },
+      {
         path: 'add-donation',
         element: <DonationCampaign />,
       },
       {
-        path: 'my-donation',
+        path: 'my-donation-campaigns',
         element: <MyDonationCampaign />,
+      },
+      {
+        path: 'my-donation',
+        element: <MyDonation />,
       },
     ],
   },

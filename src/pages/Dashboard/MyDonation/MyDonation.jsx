@@ -1,6 +1,6 @@
 
 
-const AllUser = () => {
+const MyDonation = () => {
     return (
         <div>
 
@@ -8,4 +8,4 @@ const AllUser = () => {
     );
 };
 
-export default AllUser;
+export default MyDonation;

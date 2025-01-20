@@ -51,7 +51,7 @@ const Navbar = () => {
                                 onClick={toggleDropdown}
                             >
                                 <span className="sr-only">Open user menu</span>
-                                <img className="w-8 h-8 rounded-full" src={currentUser?.photoURL}
+                                <img className="w-10 h-10 rounded-full" src={currentUser?.photoURL}
                                     referrerPolicy="no-referrer"
                                     alt="user photo" />
                             </button>

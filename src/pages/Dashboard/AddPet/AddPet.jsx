@@ -1,9 +1,9 @@
 import { Formik } from 'formik';
 import Select from 'react-select';
-import { uploadImageToServer } from "../../api/utils";
+import { uploadImageToServer } from "../../../api/utils";
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
-import useAxiosPublic from '../../hooks/useAxiosPublic';
+import useAxiosPublic from '../../../hooks/useAxiosPublic';
 import toast from 'react-hot-toast';
 import { ImSpinner9 } from 'react-icons/im';
 
