@@ -43,7 +43,7 @@ const Sidebar = () => {
                     </span>
                 </li>
                 <li className="relative group">
-                    <NavLink to="my-profile" className={getNavLinkClass}>
+                    <NavLink to="my-pets" className={getNavLinkClass}>
                         <MdOutlineAddCircle className="w-4 h-4 md:w-6 md:h-6 mr-2" />
                         <span className="hidden md:inline">My Added Pet</span>
                     </NavLink>
@@ -67,6 +67,15 @@ const Sidebar = () => {
                     </NavLink>
                     <span className="absolute left-full rounded-md whitespace-nowrap px-3 py-2 ml-4 bg-indigo-300 text-indigo-800 text-sm invisible opacity-0 -translate-x-3 transition-all group-hover:visible group-hover:opacity-100 group-hover:translate-x-0 sm:block md:hidden">
                         Create DonationCamp
+                    </span>
+                </li>
+                <li className="relative group">
+                    <NavLink to="/add-donation" className={getNavLinkClass}>
+                        <IoCreateSharp className="w-4 h-4 md:w-7 md:h-7 mr-2" />
+                        <span className="hidden md:inline">Create DonationCamp</span>
+                    </NavLink>
+                    <span className="absolute left-full rounded-md whitespace-nowrap px-3 py-2 ml-4 bg-indigo-300 text-indigo-800 text-sm invisible opacity-0 -translate-x-3 transition-all group-hover:visible group-hover:opacity-100 group-hover:translate-x-0 sm:block md:hidden">
+                        My Profile
                     </span>
                 </li>
             </ul>

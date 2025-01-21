@@ -5,6 +5,7 @@ import { SlCalender } from "react-icons/sl";
 import { LuHeartHandshake } from "react-icons/lu";
 import { RiBubbleChartFill } from "react-icons/ri";
 import { TbVaccine } from "react-icons/tb";
+import { Link } from "react-router-dom";
 
 const PetDetailModal = ({ open, setOpen, pet }) => {
 
@@ -58,11 +59,13 @@ const PetDetailModal = ({ open, setOpen, pet }) => {
                     </div>
                 </Modal.Body>
                 <Modal.Footer>
-                    <button
-                        type="button"
-                        className="text-white bg-gradient-to-r from-cyan-500 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-cyan-300 dark:focus:ring-cyan-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 transition duration-300 ease-in-out transform hover:scale-105">
-                        Adopt Me
-                    </button>
+                    <Link to={`${pet._id}`}>
+                        <button
+                            type="button"
+                            className="text-white bg-gradient-to-r from-cyan-500 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-cyan-300 dark:focus:ring-cyan-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 transition duration-300 ease-in-out transform hover:scale-105">
+                            Adopt Me
+                        </button>
+                    </Link>
                     <button
                         onClick={() => setOpen(false)}
                         className="text-white bg-gradient-to-r from-cyan-500 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-cyan-300 dark:focus:ring-cyan-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 transition duration-300 ease-in-out transform hover:scale-105">
@@ -70,7 +73,7 @@ const PetDetailModal = ({ open, setOpen, pet }) => {
                     </button>
                 </Modal.Footer>
             </Modal>
-        </div>
+        </div >
     );
 };
 

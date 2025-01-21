@@ -6,9 +6,11 @@ import 'react-quill/dist/quill.snow.css';
 import useAxiosPublic from '../../../hooks/useAxiosPublic';
 import toast from 'react-hot-toast';
 import { ImSpinner9 } from 'react-icons/im';
+import useAuth from '../../../hooks/useAuth';
 
 
 const AddPet = () => {
+    const { currentUser } = useAuth();
     const axiosPublic = useAxiosPublic();
     const categories = [
         { label: 'Dog', value: 'dog' },
@@ -16,6 +18,11 @@ const AddPet = () => {
         { label: 'Bird', value: 'bird' },
         { label: 'Rabbit', value: 'rabbit' },
         { label: 'Fish', value: 'fish' },
+    ];
+    const vaccinated = [
+        { label: 'Yes', value: 'yes' },
+        { label: 'No', value: 'no' },
+
     ];
 
     function getLongDescription(html) {
@@ -37,6 +44,7 @@ const AddPet = () => {
                         shortDescription: '',
                         longDescription: '',
                         petImage: null,
+                        vaccinated: '',
                     }}
                     validate={(values) => {
                         const errors = {};
@@ -46,6 +54,7 @@ const AddPet = () => {
                         if (!values.petLocation) errors.petLocation = 'Pet location is required';
                         if (!values.shortDescription) errors.shortDescription = 'Short description is required';
                         if (!values.longDescription) errors.longDescription = 'Long description is required';
+                        if (!values.vaccinated) errors.vaccinated = 'Vaccination status is required';
                         return errors;
                     }}
 
@@ -66,22 +75,24 @@ const AddPet = () => {
                                 return
                             }
                             const { longDescription, ...remainingValues } = values;
-                            console.log("long descrip", longDescription)
-                            console.log("value", remainingValues)
+
+
                             const petData = {
                                 ...remainingValues,
                                 petImage: imageUrl,
                                 petFullDetail: petFullDetails,
                                 addedAt: new Date().toISOString(),
                                 adopted: false,
+                                OwnerEmail: currentUser.email,
                             };
+                            console.log("pet info", petData)
 
                             console.log('Adding pet:', petData);
                             axiosPublic.post('/pets', petData)
                                 .then(res => {
                                     console.log(res.data)
                                     if (res.data.insertedId) {
-                                        toast.success("Sucessfully Inserted Pet Info")
+                                        toast.success("Successfully Inserted Pet Info")
                                     }
                                 })
                                 .catch(err => {
@@ -147,6 +158,19 @@ const AddPet = () => {
                                     className="w-full p-3 h-12 rounded-md shadow-sm"
                                 />
                                 {errors.petCategory && touched.petCategory && <div className="text-red-500 text-sm">{errors.petCategory}</div>}
+                            </div>
+                            <div>
+                                <label className="block text-lg font-medium text-gray-700">Pet Vaccinate</label>
+                                {/* React Select */}
+                                <Select
+                                    name="vaccinated"
+                                    options={vaccinated}
+                                    onChange={(selectedOption) => setFieldValue('vaccinated', selectedOption ? selectedOption.value : '')}
+                                    value={values.vaccinated ? vaccinated.find(option => option.value === values.vaccinated) : null}
+                                    onBlur={handleBlur}
+                                    className="w-full p-3 h-12 rounded-md shadow-sm"
+                                />
+                                {errors.vaccinated && touched.vaccinated && <div className="text-red-500 text-sm">{errors.vaccinated}</div>}
                             </div>
                             <div>
                                 <label className="block text-lg font-medium text-gray-700">Pet Location</label>
