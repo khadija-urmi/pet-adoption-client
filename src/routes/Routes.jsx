@@ -15,8 +15,8 @@ import MyAddedPet from "../pages/Dashboard/MyAddedPet/MyAddedPet";
 import MyDonationCampaign from "../pages/Dashboard/MyDonationCampaign/MyDonationCampaign";
 import AdoptionRequest from "../pages/Dashboard/AdoptionRequest/AdoptionRequest";
 import MyDonation from "../pages/Dashboard/MyDonation/MyDonation";
-import AddDonationCampaign from "../pages/AddDonationCampaign/AddDonationCampaign";
-import DonationCampaign from "../pages/Home/DonationCampaign/DonationCampaign";
+import AddDonationCampaign from "../pages/Dashboard/AddDonationCampaign/AddDonationCampaign";
+import DonationList from "../pages/DonationList/DonationList";
 
 
 export const router = createBrowserRouter([
@@ -38,7 +38,7 @@ export const router = createBrowserRouter([
       },
       {
         path: "/donation",
-        element: <DonationCampaign />,
+        element: <DonationList />,
       },
       {
         path: "/login",

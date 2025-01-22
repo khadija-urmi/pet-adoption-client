@@ -1,10 +1,10 @@
 import { Formik } from 'formik';
 
-import { uploadImageToServer } from '../../api/utils';
-import useAxiosSecure from '../../hooks/useAxiosSecure';
+import { uploadImageToServer } from '../../../api/utils';
+import useAxiosSecure from '../../../hooks/useAxiosSecure';
 import toast from 'react-hot-toast';
 import { ImSpinner9 } from 'react-icons/im';
-import useAuth from '../../hooks/useAuth';
+import useAuth from '../../../hooks/useAuth';
 
 const AddDonationCampaign = () => {
     const { currentUser } = useAuth();
@@ -16,16 +16,20 @@ const AddDonationCampaign = () => {
 
             <Formik
                 initialValues={{
+                    petName: '',
                     petPicture: null,
                     maxDonationAmount: '',
+                    totalDonationAmount: '',
                     lastDate: '',
                     shortDescription: '',
                     longDescription: '',
                 }}
                 validate={(values) => {
                     const errors = {};
+                    if (!values.petName) errors.petName = 'Pet Name is required'
                     if (!values.petPicture) errors.petPicture = 'Pet picture is required';
                     if (!values.maxDonationAmount) errors.maxDonationAmount = 'Max donation amount is required';
+                    if (!values.totalDonationAmount) errors.totalDonationAmount = 'total donation amount is required even if it 0';
                     if (!values.lastDate) errors.lastDate = 'Last date is required';
                     if (!values.shortDescription) errors.shortDescription = 'Short description is required';
                     if (!values.longDescription) errors.longDescription = 'Long description is required';
@@ -42,14 +46,12 @@ const AddDonationCampaign = () => {
                             return;
                         }
                         const campaignData = {
+                            ...values,
                             petPicture: imageUrl,
-                            maxDonationAmount: values.maxDonationAmount,
-                            lastDate: values.lastDate,
-                            shortDescription: values.shortDescription,
-                            longDescription: values.longDescription,
                             createdAt: new Date().toISOString(),
                             EventOwnerEmail: currentUser.email,
                         };
+                        console.log("full event data");
                         await axiosSecure.post('/donations', campaignData);
                         toast.success('Donation Campaign Created Successfully! ✔️');
                         resetForm();
@@ -71,6 +73,18 @@ const AddDonationCampaign = () => {
                     isSubmitting,
                 }) => (
                     <form onSubmit={handleSubmit} className="space-y-4">
+                        <div>
+                            <label className="block text-lg font-medium text-gray-700">Pet Name</label>
+                            <input
+                                type="text"
+                                name="petName"
+                                onChange={handleChange}
+                                onBlur={handleBlur}
+                                value={values.petName}
+                                className="w-full p-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            />
+                            {errors.petName && touched.petName && <div className="text-red-500 text-sm">{errors.petName}</div>}
+                        </div>
                         {/* Pet Picture */}
                         <div>
                             <label className="block text-sm font-medium text-gray-700">Pet Picture</label>
@@ -98,6 +112,19 @@ const AddDonationCampaign = () => {
                                 className="mt-2 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
                             />
                             {errors.maxDonationAmount && touched.maxDonationAmount && <div className="text-red-500 text-sm">{errors.maxDonationAmount}</div>}
+                        </div>
+                        {/* Total Donation Amount */}
+                        <div>
+                            <label className="block text-sm font-medium text-gray-700">Total Collected Donation Amount</label>
+                            <input
+                                type="number"
+                                name="totalDonationAmount"
+                                value={values.totalDonationAmount}
+                                onChange={handleChange}
+                                onBlur={handleBlur}
+                                className="mt-2 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
+                            />
+                            {errors.totalDonationAmount && touched.totalDonationAmount && <div className="text-red-500 text-sm">{errors.totalDonationAmount}</div>}
                         </div>
 
                         {/* Last Date */}
