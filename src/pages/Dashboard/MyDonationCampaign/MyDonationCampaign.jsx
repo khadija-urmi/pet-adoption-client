@@ -60,7 +60,7 @@ const MyDonationCampaign = () => {
 
                                     <td className="px-6 py-4">
                                         {/* edit button */}
-                                        <Link to={`/dashboard/donations/${donationEvent._id}`}><button className="px-4 py-2 rounded-lg bg-purple-600 text-white hover:bg-purple-800">
+                                        <Link to={`/dashboard/edit-donation/${donationEvent._id}`}><button className="px-4 py-2 rounded-lg bg-purple-600 text-white hover:bg-purple-800">
                                             <RiEditCircleFill />
                                         </button></Link>
                                     </td>

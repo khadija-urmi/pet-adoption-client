@@ -18,6 +18,7 @@ import MyDonation from "../pages/Dashboard/MyDonation/MyDonation";
 import AddDonationCampaign from "../pages/Dashboard/AddDonationCampaign/AddDonationCampaign";
 import DonationList from "../pages/DonationList/DonationList";
 import EditDonationCampaign from "../pages/Dashboard/EditDonationCampaign/EditDonationCampaign";
+import DonationDetails from "../components/DonationDetails/DonationDetails";
 
 
 export const router = createBrowserRouter([
@@ -40,6 +41,10 @@ export const router = createBrowserRouter([
       {
         path: "/donation",
         element: <DonationList />,
+      },
+      {
+        path: "/donation/:id",
+        element: <DonationDetails />,
       },
       {
         path: "/login",
@@ -113,7 +118,7 @@ export const router = createBrowserRouter([
         element: <MyDonationCampaign />,
       },
       {
-        path: 'donations/:id',
+        path: 'edit-donation/:id',
         element: <EditDonationCampaign />,
       },
       {

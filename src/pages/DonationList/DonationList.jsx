@@ -6,13 +6,10 @@ import useAxiosSecure from "../../hooks/useAxiosSecure";
 const DonationList = () => {
     const axiosSecure = useAxiosSecure();
 
-    console.log("Axios secure is", axiosSecure.defaults);
-
     const { data: allDonation = [], isLoading } = useQuery({
         queryKey: ['allDonation'],
         queryFn: async () => {
             const res = await axiosSecure.get('/donations');
-            console.log("All donation", res.data);
             return res.data;
         }
     })
@@ -38,7 +35,7 @@ const DonationList = () => {
                 {allDonation.map((donation) => {
                     return (
                         <div
-                            key={donation.id}
+                            key={donation._id}
                             className="bg-white p-4 rounded-lg shadow-lg flex flex-col"
                         >
                             <img
@@ -54,7 +51,7 @@ const DonationList = () => {
                                     <p className="text-sm text-gray-600">Max Donation: ${donation.maxDonationAmount}</p>
                                 </div>
                                 <Link
-                                    to={`/donation-campaign/${donation.id}`}
+                                    to={`/donation/${donation._id}`}
                                     className="text-blue-500 hover:text-blue-700 text-sm font-semibold"
                                 >
                                     View Details
