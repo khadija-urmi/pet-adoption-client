@@ -17,6 +17,7 @@ import AdoptionRequest from "../pages/Dashboard/AdoptionRequest/AdoptionRequest"
 import MyDonation from "../pages/Dashboard/MyDonation/MyDonation";
 import AddDonationCampaign from "../pages/Dashboard/AddDonationCampaign/AddDonationCampaign";
 import DonationList from "../pages/DonationList/DonationList";
+import EditDonationCampaign from "../pages/Dashboard/EditDonationCampaign/EditDonationCampaign";
 
 
 export const router = createBrowserRouter([
@@ -110,6 +111,10 @@ export const router = createBrowserRouter([
       {
         path: 'my-donation-campaigns',
         element: <MyDonationCampaign />,
+      },
+      {
+        path: 'donations/:id',
+        element: <EditDonationCampaign />,
       },
       {
         path: 'my-donation',
