@@ -1,16 +1,27 @@
-
 import useDonation from "../../../hooks/useDonation";
 import { FaPauseCircle } from 'react-icons/fa';
 import { RiEditCircleFill } from "react-icons/ri";
 import noDataFoundImg from "../../../assets/noDataFound.png";
-import { Link, } from "react-router-dom";
-
+import { Link } from "react-router-dom";
+import axios from "axios";
+import toast from "react-hot-toast";
+import { FaPlayCircle } from "react-icons/fa";
 const MyDonationCampaign = () => {
-    const [DonationInfo] = useDonation();
+    const [DonationInfo, refetch] = useDonation();
 
     const calculateProgress = (donatedAmount, maxDonationAmount) => {
         return (donatedAmount / maxDonationAmount) * 100;
     };
+
+    const togglePause = async (donationId, currentState) => {
+        const newPauseState = !currentState;
+        await axios.patch(
+            `http://localhost:5000/donations-camp-pause/${donationId}`,
+            { pause: newPauseState }
+        );
+        toast.success(`Now This donation is now ${newPauseState ? 'paused 🛑' : 'resumed 👍'} `);
+        refetch();
+    }
 
     return (
         <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
@@ -60,14 +71,19 @@ const MyDonationCampaign = () => {
 
                                     <td className="px-6 py-4">
                                         {/* edit button */}
-                                        <Link to={`/dashboard/edit-donation/${donationEvent._id}`}><button className="px-4 py-2 rounded-lg bg-purple-600 text-white hover:bg-purple-800">
-                                            <RiEditCircleFill />
-                                        </button></Link>
+                                        <Link to={`/dashboard/edit-donation/${donationEvent._id}`}>
+                                            <button className="px-4 py-2 rounded-lg bg-purple-600 text-white hover:bg-purple-800">
+                                                <RiEditCircleFill />
+                                            </button>
+                                        </Link>
                                     </td>
                                     <td className="px-6 py-4">
                                         {/* pause Button */}
-                                        <button className="px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600">
-                                            <FaPauseCircle />
+                                        <button
+                                            onClick={() => togglePause(donationEvent._id, donationEvent.pause)}
+                                            className="px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600"
+                                        >
+                                            {donationEvent.pause ? <FaPlayCircle /> : <FaPauseCircle />}
                                         </button>
                                     </td>
                                 </tr>

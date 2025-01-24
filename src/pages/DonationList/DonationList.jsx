@@ -3,6 +3,7 @@ import { LiaSpinnerSolid } from "react-icons/lia";
 import { Link } from "react-router-dom";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
 
+
 const DonationList = () => {
     const axiosSecure = useAxiosSecure();
 
@@ -52,7 +53,7 @@ const DonationList = () => {
                                 </div>
                                 <Link
                                     to={`/donation/${donation._id}`}
-                                    className="text-blue-500 hover:text-blue-700 text-sm font-semibold"
+                                    className={`bg-blue-500 px-6 py-3 hover:bg-blue-700 text-white rounded-md text-sm font-semibold ${donation?.pause ? "cursor-not-allowed opacity-50" : ""} `}
                                 >
                                     View Details
                                 </Link>
