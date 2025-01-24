@@ -1,11 +1,11 @@
 import useDonation from "../../../hooks/useDonation";
-import { FaPauseCircle } from 'react-icons/fa';
+import { FaPauseCircle, FaUserCircle, FaPlayCircle } from 'react-icons/fa';
 import { RiEditCircleFill } from "react-icons/ri";
 import noDataFoundImg from "../../../assets/noDataFound.png";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import toast from "react-hot-toast";
-import { FaPlayCircle } from "react-icons/fa";
+
 const MyDonationCampaign = () => {
     const [DonationInfo, refetch] = useDonation();
 
@@ -40,6 +40,7 @@ const MyDonationCampaign = () => {
                         <th scope="col" className="px-6 py-3">Progress Bar</th>
                         <th scope="col" className="px-6 py-3">Edit</th>
                         <th scope="col" className="px-6 py-3">Pause</th>
+                        <th scope="col" className="px-6 py-3">Donar</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -85,6 +86,19 @@ const MyDonationCampaign = () => {
                                         >
                                             {donationEvent.pause ? <FaPlayCircle /> : <FaPauseCircle />}
                                         </button>
+                                    </td>
+                                    <td className="px-6 py-4">
+                                        {/* pause Button */}
+                                        <td className="px-6 py-4">
+                                            {/*View Donor Button */}
+                                            <Link to="/dashboard/my-donation-donar">
+                                                <button
+                                                    className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600"
+                                                >
+                                                    <FaUserCircle />
+                                                </button>
+                                            </Link>
+                                        </td>
                                     </td>
                                 </tr>
                             );

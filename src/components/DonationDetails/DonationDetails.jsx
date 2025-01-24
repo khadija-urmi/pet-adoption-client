@@ -2,9 +2,13 @@ import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { useParams } from "react-router-dom";
 import moment from "moment/moment";
+import DonationPayModal from "../Modal/DonationPayModal/DonationPayModal";
+import { useState } from "react";
 
 const DonationDetails = () => {
     const { id } = useParams();
+    const [openDonateModal, setOpenDonateModal] = useState(true);
+    const [selectedDonation, setSelectedDonation] = useState(null);
 
     const { data: singleDataDonation = {} } = useQuery({
         queryKey: ['singleDataDonation', id],
@@ -13,6 +17,11 @@ const DonationDetails = () => {
             return res.data;
         },
     });
+
+    const openDonationModal = (donation) => {
+        setSelectedDonation(donation);
+        setOpenDonateModal(true);
+    };
 
     const formatLastDate = moment(singleDataDonation?.lastDate).format('dddd, MMMM Do YYYY, h:mm A');
     return (
@@ -34,9 +43,18 @@ const DonationDetails = () => {
                         </div>
                         <p className=" text-gray-700 dark:text-gray-400 text-lg"><span className="font-bold">Status : </span>{singleDataDonation?.completed ? "Donation Complete" : "Need Donation "}</p>
                     </div>
-                    <button href="#" className="inline-flex items-center px-8 py-3 text-lg font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 mt-6">
+                    <button onClick={() => openDonationModal(singleDataDonation)} className="inline-flex items-center px-8 py-3 text-lg font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 mt-6">
                         Donate Now
                     </button>
+                    {
+                        selectedDonation && (
+                            <DonationPayModal
+                                open={openDonateModal}
+                                setOpen={setOpenDonateModal}
+                                donation={singleDataDonation}
+                            />
+                        )
+                    }
                 </div>
             </div>
         </div>
