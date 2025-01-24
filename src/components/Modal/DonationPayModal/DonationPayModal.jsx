@@ -1,27 +1,42 @@
-import { Button, Modal } from "flowbite-react";
+import { loadStripe } from '@stripe/stripe-js';
+import { Elements } from "@stripe/react-stripe-js";
+import { Button, Label, Modal, TextInput } from "flowbite-react";
+import CheckPaymentForm from "../../CheckPaymentForm/CheckPaymentForm"
+import { useState } from 'react';
 
 const DonationPayModal = ({ open, setOpen, donation }) => {
-    console.log(donation);
+    const [amount, setAmount] = useState("");
+
+    const handleInputChange = (e) => {
+        setAmount(e.target.value);
+    };
+    const stripePromise = loadStripe(import.meta.env.VITE_paymentGatewayPK);
+
     return (
         <>
             <Modal show={open} size="5xl" onClose={() => setOpen(false)}>
                 <Modal.Header>Sharing your infinite love to pets</Modal.Header>
                 <Modal.Body>
-                    <div className="space-y-6 p-6">
-                        <p className="text-base leading-relaxed text-gray-500 dark:text-gray-400">
-                            With less than a month to go before the European Union enacts new consumer privacy laws for its citizens,
-                            companies around the world are updating their terms of service agreements to comply.
-                        </p>
-                        <p className="text-base leading-relaxed text-gray-500 dark:text-gray-400">
-                            The European Union’s General Data Protection Regulation (G.D.P.R.) goes into effect on May 25 and is meant
-                            to ensure a common set of data rights in the European Union. It requires organizations to notify users as
-                            soon as possible of high-risk data breaches that could personally affect them.
-                        </p>
+                    <div className="space-y-6 p-3">
+                        <div>
+                            <div className="mb-2  block">
+                                <Label htmlFor="base" value="Donate your Amount" />
+                            </div>
+                            <TextInput id="base"
+                                type="text" sizing="md"
+                                value={amount}
+                                onChange={handleInputChange} />
+                        </div>
+                        {/* Adding payment way using cards */}
+                        <div>
+                            <Elements stripe={stripePromise}>
+                                <CheckPaymentForm amount={amount} donationCamp={donation} />
+                            </Elements>
+                        </div>
                     </div>
                 </Modal.Body>
                 <Modal.Footer>
-                    <Button onClick={() => setOpen(false)}>I accept</Button>
-                    <Button color="gray" onClick={() => setOpen(false)}>
+                    <Button gradientMonochrome="cyan" onClick={() => setOpen(false)}>
                         Decline
                     </Button>
                 </Modal.Footer>
