@@ -8,8 +8,8 @@ import { useNavigate } from "react-router-dom";
 
 const CheckPaymentForm = ({ amount, donationCamp }) => {
 
-    const { maxDonationAmount, totalDonationAmount, _id } = donationCamp;
-    console.log(maxDonationAmount, totalDonationAmount, _id);
+    const { _id, petName, totalDonationAmount } = donationCamp;
+
     const [error, setError] = useState('');
     const [clientSecret, setClientSecret] = useState('');
     const [transactionId, setTransactionId] = useState('');
@@ -20,17 +20,24 @@ const CheckPaymentForm = ({ amount, donationCamp }) => {
     const navigate = useNavigate();
 
     useEffect(() => {
-        axiosSecure.post('/create-payment-intent', { price: amount })
-            .then(res => {
-                console.log(res.data.clientSecret);
-                setClientSecret(res.data.clientSecret);
-            })
+        if (amount) {
+            axiosSecure.post('/create-payment-intent', { price: amount })
+                .then(res => {
 
+                    setClientSecret(res.data.clientSecret);
+                })
+        }
     }, [axiosSecure, amount])
+
+    //calculating the totalCollectDonation
+    const amountInt = parseInt(amount)
+
+    const totalCollectDonateAmount = totalDonationAmount + amountInt;
+    console.log("Amount", totalDonationAmount, amountInt, totalCollectDonateAmount);
+
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-
         if (!stripe || !elements) {
             return;
         }
@@ -38,12 +45,10 @@ const CheckPaymentForm = ({ amount, donationCamp }) => {
         if (card === null) {
             return
         }
-
         const { error, paymentMethod } = await stripe.createPaymentMethod({
             type: 'card',
             card,
         });
-
         if (error) {
             console.log('payment error', error);
             setError(error.message);
@@ -70,23 +75,29 @@ const CheckPaymentForm = ({ amount, donationCamp }) => {
                 console.log('transaction id', paymentIntent.id);
                 setTransactionId(paymentIntent.id);
 
+                ///send data to donarList  of Database
                 const DonarData = {
                     email: currentUser?.email,
                     name: currentUser?.name,
                     date: new Date(),
                     donationAmount: amount,
                     transactionId: paymentIntent.id,
-                    donationCampId: _id
+                    donationCampId: _id,
+                    donationEventName: petName,
                 }
                 const res = await axiosSecure.post('/save-donation-pay', DonarData);
-                console.log(res);
-                if (res.data?.donationData?.insertedId) {
-                    toast.success("Successfully donate money 🎉")
+                console.log(res.data);
+                if (res.data?.insertedId) {
+                    const res = await axiosSecure.patch(`my-donations-camp/${_id}`, { totalDonationAmount: totalCollectDonateAmount })
+                    if (res.data?.modifiedCount > 0) {
+                        toast.success("Successfully donate money 🎉")
+                    }
                 }
                 navigate('/dashboard/my-donation')
             }
         }
     }
+
     return (
         <form onSubmit={handleSubmit}>
             <CardElement
@@ -95,12 +106,6 @@ const CheckPaymentForm = ({ amount, donationCamp }) => {
                         base: {
                             fontSize: '16px',
                             color: '#424770',
-                            '::placeholder': {
-                                color: '#aab7c4',
-                            },
-                        },
-                        invalid: {
-                            color: '#9e2146',
                         },
                     },
                 }}

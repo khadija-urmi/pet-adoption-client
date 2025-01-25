@@ -10,6 +10,7 @@ const DonationPayModal = ({ open, setOpen, donation }) => {
     const handleInputChange = (e) => {
         setAmount(e.target.value);
     };
+
     const stripePromise = loadStripe(import.meta.env.VITE_paymentGatewayPK);
 
     return (

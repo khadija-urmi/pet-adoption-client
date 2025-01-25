@@ -15,3 +15,4 @@ export const uploadImageToServer = async (imageFile) => {
         throw error;
     }
 };
+

@@ -19,8 +19,14 @@ const EditDonationCampaign = () => {
 
     const handleSubmit = async (values, { resetForm }) => {
         try {
-            const campaignData = { ...values };
-
+            const campaignData = {
+                petName: values.petName,
+                maxDonationAmount: values.maxDonationAmount,
+                totalDonationAmount: values.totalDonationAmount,
+                lastDate: values.lastDate,
+                shortDescription: values.shortDescription,
+            };
+            console.log("capmpp", campaignData)
             await axios.patch(`http://localhost:5000/my-donations-camp/${id}`, campaignData);
             toast.success('Donation Campaign Updated Successfully! 🎉');
             resetForm();

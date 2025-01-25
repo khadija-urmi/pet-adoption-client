@@ -5,15 +5,16 @@ import useAxiosSecure from "../../../hooks/useAxiosSecure";
 
 const MyDonation = () => {
     const { currentUser } = useAuth();
-    const axiosSecure = useAxiosSecure();
+    //const axiosSecure = useAxiosSecure();
 
     const { data: donations = [] } = useQuery({
         queryKey: ['donations', currentUser?.email],
         queryFn: async () => {
-            const res = await axiosSecure.get(`/save-donation-pay/${currentUser.email}`)
-            return res.data;
+            // const res = await axiosSecure.get(`/save-donation-pay/${currentUser.email}`)
+            //return res.data;
         }
     })
+    console.log(donations)
     return (
         <div>
             <h2 className="text3-xl">Total Payments: {donations.length}</h2>
@@ -22,8 +23,8 @@ const MyDonation = () => {
                     {/* head */}
                     <thead>
                         <tr>
-                            <th>#</th>
-                            <th>price</th>
+                            <th>Serial no</th>
+                            <th>Price</th>
                             <th>Transaction Id</th>
                             <th>Donation Campaign</th>
                         </tr>
@@ -31,8 +32,9 @@ const MyDonation = () => {
                     <tbody>
                         {donations.map((donation, index) => <tr key={donation._id}>
                             <th>{index + 1}</th>
-                            <td>${donation.price}</td>
-                            <td>{donation.transactionId}</td>
+                            <td>{donation?.donationAmount}</td>
+                            <td>{donation?.transactionId}</td>
+                            <td>{donation?._id}</td>
                         </tr>)}
 
                     </tbody>

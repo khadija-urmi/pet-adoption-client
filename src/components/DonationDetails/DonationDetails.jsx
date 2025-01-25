@@ -27,7 +27,7 @@ const DonationDetails = () => {
     return (
         <div className="flex justify-center items-center min-h-screen">
             <div className="max-w-3xl bg-white border border-gray-200 rounded-lg shadow-lg dark:bg-gray-800 dark:border-gray-700">
-                <img className="rounded-t-lg w-full h-80 object-cover" src={singleDataDonation?.petPicture} alt={singleDataDonation?.petName} />
+                <img className="rounded-t-lg w-full h-[400px] object-cover" src={singleDataDonation?.petPicture} alt={singleDataDonation?.petName} />
                 <div className="p-6">
                     <h5 className="mb-2 text-3xl font-bold tracking-tight text-gray-900 dark:text-white">{singleDataDonation?.petName}</h5>
                     <p className="mb-2 text-lg font-normal text-gray-700 dark:text-gray-400">{singleDataDonation?.shortDescription}</p>
