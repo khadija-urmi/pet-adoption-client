@@ -21,7 +21,8 @@ import DonationDetails from "../components/DonationDetails/DonationDetails";
 import MyCampaignDonors from "../pages/Dashboard/MyCampaignDonors/MyCampaignDonors";
 import MyDonationList from "../pages/Dashboard/MyDonationList/MyDonationList";
 import MyAdoptedPet from "../pages/Dashboard/MyAdoptedPet/MyAdoptedPet";
-
+import AllPetLists from "../pages/Dashboard/AllPetLists/AllPetLists";
+import AllDonationLists from "../pages/Dashboard/AllDonationLists/AllDonationLists"
 
 export const router = createBrowserRouter([
   {
@@ -152,6 +153,18 @@ export const router = createBrowserRouter([
         path: 'my-donation-donar',
         element: <PrivateRoute>
           <MyCampaignDonors />
+        </PrivateRoute>
+      },
+      {
+        path: 'all-pet-lists',
+        element: <PrivateRoute>
+          <AllPetLists />
+        </PrivateRoute>
+      },
+      {
+        path: 'all-donation-lists',
+        element: <PrivateRoute>
+          <AllDonationLists />
         </PrivateRoute>
       },
     ],
