@@ -14,12 +14,12 @@ import AllUser from "../pages/Dashboard/AllUser/AllUser";
 import MyAddedPet from "../pages/Dashboard/MyAddedPet/MyAddedPet";
 import MyDonationCampaign from "../pages/Dashboard/MyDonationCampaign/MyDonationCampaign";
 import AdoptionRequest from "../pages/Dashboard/AdoptionRequest/AdoptionRequest";
-import MyDonation from "../pages/Dashboard/MyDonation/MyDonation";
 import AddDonationCampaign from "../pages/Dashboard/AddDonationCampaign/AddDonationCampaign";
 import DonationList from "../pages/DonationList/DonationList";
 import EditDonationCampaign from "../pages/Dashboard/EditDonationCampaign/EditDonationCampaign";
 import DonationDetails from "../components/DonationDetails/DonationDetails";
 import MyCampaignDonors from "../pages/Dashboard/MyCampaignDonors/MyCampaignDonors";
+import MyDonarList from "../pages/Dashboard/MyDonarList/MyDonarList";
 
 
 export const router = createBrowserRouter([
@@ -124,7 +124,7 @@ export const router = createBrowserRouter([
       },
       {
         path: 'my-donation',
-        element: <MyDonation />,
+        element: <MyDonarList />,
       },
       {
         path: 'my-donation-donar',

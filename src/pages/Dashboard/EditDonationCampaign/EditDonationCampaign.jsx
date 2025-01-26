@@ -26,7 +26,6 @@ const EditDonationCampaign = () => {
                 lastDate: values.lastDate,
                 shortDescription: values.shortDescription,
             };
-            console.log("capmpp", campaignData)
             await axios.patch(`http://localhost:5000/my-donations-camp/${id}`, campaignData);
             toast.success('Donation Campaign Updated Successfully! 🎉');
             resetForm();
@@ -49,7 +48,6 @@ const EditDonationCampaign = () => {
                 initialValues={{
                     petName: singleDonation.petName || '',
                     maxDonationAmount: singleDonation.maxDonationAmount || '',
-                    totalDonationAmount: singleDonation.totalDonationAmount || '',
                     lastDate: singleDonation.lastDate || '',
                     shortDescription: singleDonation.shortDescription || '',
                 }}
@@ -57,7 +55,6 @@ const EditDonationCampaign = () => {
                     const errors = {};
                     if (!values.petName) errors.petName = 'Pet Name is required';
                     if (!values.maxDonationAmount) errors.maxDonationAmount = 'Max donation amount is required';
-                    if (!values.totalDonationAmount) errors.totalDonationAmount = 'Total donation amount is required';
                     if (!values.lastDate) errors.lastDate = 'Last date is required';
                     if (!values.shortDescription) errors.shortDescription = 'Short description is required';
                     return errors;
@@ -98,19 +95,6 @@ const EditDonationCampaign = () => {
                                 className="mt-2 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
                             />
                             {errors.maxDonationAmount && touched.maxDonationAmount && <div className="text-red-500 text-sm">{errors.maxDonationAmount}</div>}
-                        </div>
-
-                        <div>
-                            <label className="block text-sm font-medium text-gray-700">Total Collected Donation Amount</label>
-                            <input
-                                type="number"
-                                name="totalDonationAmount"
-                                value={values.totalDonationAmount}
-                                onChange={handleChange}
-                                onBlur={handleBlur}
-                                className="mt-2 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
-                            />
-                            {errors.totalDonationAmount && touched.totalDonationAmount && <div className="text-red-500 text-sm">{errors.totalDonationAmount}</div>}
                         </div>
 
                         <div>
