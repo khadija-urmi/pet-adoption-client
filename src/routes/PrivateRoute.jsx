@@ -7,7 +7,7 @@ import PropTypes from "prop-types";
 const PrivateRoute = ({ children }) => {
     const { currentUser, isLoading } = useAuth();
     const location = useLocation();
-    console.log("current user", currentUser);
+
     if (isLoading) {
         <div className="text-center">
             <Spinner aria-label="Extra large Center-aligned spinner example Purple" size="xl" color="purple" />

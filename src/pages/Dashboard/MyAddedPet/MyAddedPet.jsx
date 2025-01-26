@@ -1,26 +1,57 @@
-import { FaEdit } from "react-icons/fa";
 import { useState } from "react";
 import SweetPagination from "sweetpagination";
-import usePet from "../../../hooks/usePet";
+import { useNavigate } from "react-router-dom";
+import { FaEdit } from "react-icons/fa";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import { IoLogoOctocat } from "react-icons/io";
+import usePet from "../../../hooks/usePet";
+import axios from "axios";
+import useAxiosSecure from "../../../hooks/useAxiosSecure";
 
 const MyAddedPet = () => {
+    const axiosSecure = useAxiosSecure();
     const [currentPageData, setCurrentPageData] = useState([]);
     const [PetInfo] = usePet();
-
+    const [showDeleteModal, setShowDeleteModal] = useState(false);
+    const [deletePetId, setDeletePetId] = useState(null);
+    const navigate = useNavigate();
 
     const handleUpdate = (petId) => {
-
-        console.log("Updating pet with ID:", petId);
+        console.log(petId)
+        navigate(`/dashboard/my-edit-pet/${petId}`)
     };
 
     const handleDelete = (petId) => {
-        console.log("Deleting pet with ID:", petId);
+        setDeletePetId(petId);
+        setShowDeleteModal(true);
     };
 
-    const handleAdopt = (petId) => {
-        console.log("Adopting pet with ID:", petId);
+    const confirmDelete = async () => {
+        console.log("Deleting pet with ID:", deletePetId);
+        try {
+            await axiosSecure.delete(`/pets/${deletePetId}`);
+            console.log("Pet deleted successfully");
+            setShowDeleteModal(false);
+            setCurrentPageData(currentPageData.filter(pet => pet._id !== deletePetId));
+        } catch (error) {
+            console.error("Error deleting pet:", error);
+        }
+    };
+
+    const cancelDelete = () => {
+        setShowDeleteModal(false);
+    };
+
+    const handleAdopt = async (petId) => {
+        try {
+            await axios.patch(`http://localhost:5000/pets/adopt/${petId}`);
+            const updatedPetInfo = PetInfo.map(pet =>
+                pet._id === petId ? { ...pet, adopted: true } : pet
+            );
+            setCurrentPageData(updatedPetInfo);
+        } catch (error) {
+            console.error("Error adopting pet:", error);
+        }
     };
 
     return (
@@ -86,9 +117,7 @@ const MyAddedPet = () => {
                                                 className="relative inline-flex items-center justify-center p-0.5 mb-2 me-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-red-200 via-red-300 to-yellow-200 group-hover:from-red-200 group-hover:via-red-300 group-hover:to-yellow-200 dark:text-white dark:hover:text-gray-900 focus:ring-4 focus:outline-none focus:ring-red-100 dark:focus:ring-red-400"
                                                 aria-label="Adopt pet"
                                             >
-                                                <span className="relative px-5 py-2.5 flex
-                                                justify-between items-center
-                                                transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-opacity-0">
+                                                <span className="relative px-5 py-2.5 flex justify-between items-center transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-opacity-0">
                                                     Adopt <IoLogoOctocat className="w-4 h-4 ml-2" />
                                                 </span>
                                             </button>
@@ -106,6 +135,30 @@ const MyAddedPet = () => {
                     </tbody>
                 </table>
             </div>
+
+            {/* Delete Modal */}
+            {showDeleteModal && (
+                <div className="fixed inset-0 bg-gray-600 bg-opacity-50 flex items-center justify-center z-50">
+                    <div className="bg-white p-6 rounded-lg shadow-lg max-w-sm w-full">
+                        <h3 className="text-lg font-semibold text-center">Are you sure you want to delete this pet?</h3>
+                        <div className="flex justify-between mt-4">
+                            <button
+                                onClick={confirmDelete}  // Confirm delete action
+                                className="bg-red-500 text-white px-4 py-2 rounded-lg"
+                            >
+                                Yes
+                            </button>
+                            <button
+                                onClick={cancelDelete}  // Cancel the delete action
+                                className="bg-gray-300 text-gray-700 px-4 py-2 rounded-lg"
+                            >
+                                No
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            )}
+
             <SweetPagination
                 currentPageData={setCurrentPageData}
                 getData={PetInfo}

@@ -23,7 +23,7 @@ import MyDonationList from "../pages/Dashboard/MyDonationList/MyDonationList";
 import MyAdoptedPet from "../pages/Dashboard/MyAdoptedPet/MyAdoptedPet";
 import AllPetLists from "../pages/Dashboard/AllPetLists/AllPetLists";
 import AllDonationLists from "../pages/Dashboard/AllDonationLists/AllDonationLists"
-
+import EditPetInfo from "../pages/Dashboard/EditPetInfo/EditPetInfo"
 export const router = createBrowserRouter([
   {
     path: "/",
@@ -68,16 +68,10 @@ export const router = createBrowserRouter([
       </PrivateRoute>
     ),
     children: [
-      {
-        index: true,
-        element: (
-          <PrivateRoute>
-            <Statistics />
-          </PrivateRoute>
-        ),
-      },
+
       {
         path: 'add-pet',
+        index: true,
         element: (
           <PrivateRoute>
             <AddPet />
@@ -105,6 +99,14 @@ export const router = createBrowserRouter([
         element: (
           <PrivateRoute>
             <MyAddedPet />
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: 'my-edit-pet/:id',
+        element: (
+          <PrivateRoute>
+            <EditPetInfo />
           </PrivateRoute>
         ),
       },
