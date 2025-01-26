@@ -84,10 +84,19 @@ const Sidebar = () => {
                 <li className="relative group">
                     <NavLink to="my-donation" className={getNavLinkClass}>
                         <TbPigMoney className="w-4 h-4 md:w-7 md:h-7 mr-2" />
-                        <span className="hidden md:inline">My Donation</span>
+                        <span className="hidden md:inline">My DonationList</span>
                     </NavLink>
                     <span className="absolute left-full rounded-md whitespace-nowrap px-3 py-2 ml-4 bg-indigo-300 text-indigo-800 text-sm invisible opacity-0 -translate-x-3 transition-all group-hover:visible group-hover:opacity-100 group-hover:translate-x-0 sm:block md:hidden">
-                        My Donation
+                        My DonationList
+                    </span>
+                </li>
+                <li className="relative group">
+                    <NavLink to="my-donation-donar" className={getNavLinkClass}>
+                        <TbPigMoney className="w-4 h-4 md:w-7 md:h-7 mr-2" />
+                        <span className="hidden md:inline">My Campaign DonarList</span>
+                    </NavLink>
+                    <span className="absolute left-full rounded-md whitespace-nowrap px-3 py-2 ml-4 bg-indigo-300 text-indigo-800 text-sm invisible opacity-0 -translate-x-3 transition-all group-hover:visible group-hover:opacity-100 group-hover:translate-x-0 sm:block md:hidden">
+                        My Campaign DonarList
                     </span>
                 </li>
                 <li className="relative group">

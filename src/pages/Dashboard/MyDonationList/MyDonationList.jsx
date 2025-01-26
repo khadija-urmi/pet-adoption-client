@@ -1,8 +1,9 @@
-import { useQuery } from '@tanstack/react-query';
-import useAuth from '../../../hooks/useAuth';
-import useAxiosSecure from '../../../hooks/useAxiosSecure';
+import { useQuery } from "@tanstack/react-query";
+import useAuth from "../../../hooks/useAuth";
+import useAxiosSecure from "../../../hooks/useAxiosSecure";
 
-const MyDonarList = () => {
+
+const MyDonationList = () => {
     const { currentUser } = useAuth();
     const axiosSecure = useAxiosSecure();
 
@@ -58,4 +59,4 @@ const MyDonarList = () => {
     );
 };
 
-export default MyDonarList;
+export default MyDonationList;

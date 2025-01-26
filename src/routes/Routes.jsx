@@ -19,7 +19,7 @@ import DonationList from "../pages/DonationList/DonationList";
 import EditDonationCampaign from "../pages/Dashboard/EditDonationCampaign/EditDonationCampaign";
 import DonationDetails from "../components/DonationDetails/DonationDetails";
 import MyCampaignDonors from "../pages/Dashboard/MyCampaignDonors/MyCampaignDonors";
-import MyDonarList from "../pages/Dashboard/MyDonarList/MyDonarList";
+import MyDonationList from "../pages/Dashboard/MyDonationList/MyDonationList";
 
 
 export const router = createBrowserRouter([
@@ -124,7 +124,7 @@ export const router = createBrowserRouter([
       },
       {
         path: 'my-donation',
-        element: <MyDonarList />,
+        element: < MyDonationList />,
       },
       {
         path: 'my-donation-donar',
