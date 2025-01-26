@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import useAuth from "../../../hooks/useAuth";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
-
+import noDataFoundImg from "../../../assets/noDataFound.png";
 
 const MyDonationList = () => {
     const { currentUser } = useAuth();
@@ -10,10 +10,11 @@ const MyDonationList = () => {
     const { data: donations = [] } = useQuery({
         queryKey: ['donations', currentUser?.email],
         queryFn: async () => {
-            const res = await axiosSecure.get(`/my-donation/${currentUser.email}`)
+            const res = await axiosSecure.get(`/my-donation/${currentUser.email}`);
             return res.data;
         }
-    })
+    });
+
     return (
         <div>
             <h2 className="text-3xl text-center py-4 mb-8 bg-gray-200">Total Payments: {donations.length}</h2>
@@ -36,19 +37,30 @@ const MyDonationList = () => {
                         </tr>
                     </thead>
                     <tbody>
-                        {donations.map((donation, index) =>
-                            <tr key={donation._id} className="border-b border-gray-200 dark:border-gray-700">
-                                <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap bg-gray-50 dark:text-white dark:bg-gray-800">
-                                    {index + 1}
-                                </th>
-                                <td className="px-6 py-4">
-                                    {donation?.donationAmount}
-                                </td>
-                                <td className="px-6 py-4 bg-gray-50 dark:bg-gray-800">
-                                    {donation?.transactionId}
-                                </td>
-                                <td className="px-6 py-4">
-                                    {donation?.donationEventName}
+                        {donations && donations.length > 0 ? (
+                            donations.map((donation, index) => {
+                                return (
+                                    <tr key={donation._id} className="border-b border-gray-200 dark:border-gray-700">
+                                        <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap bg-gray-50 dark:text-white dark:bg-gray-800">
+                                            {index + 1}
+                                        </th>
+                                        <td className="px-6 py-4">
+                                            {donation?.donationAmount}
+                                        </td>
+                                        <td className="px-6 py-4 bg-gray-50 dark:bg-gray-800">
+                                            {donation?.transactionId}
+                                        </td>
+                                        <td className="px-6 py-4">
+                                            {donation?.donationEventName}
+                                        </td>
+                                    </tr>
+                                );
+                            })
+                        ) : (
+                            <tr>
+                                <td colSpan="8" className="px-6 py-4 text-center">
+                                    <img src={noDataFoundImg} className="w-56 h-48 mx-auto" alt="No data found" />
+                                    <p className="text-gray-500 text-3xl mt-2">No data available</p>
                                 </td>
                             </tr>
                         )}

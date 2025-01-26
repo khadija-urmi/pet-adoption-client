@@ -3,6 +3,7 @@ import useAuth from "../../../hooks/useAuth";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import noDataFoundImg from "../../../assets/noDataFound.png";
 
+
 const MyCampaignDonors = () => {
     const { currentUser } = useAuth();
     const axiosSecure = useAxiosSecure();
@@ -13,14 +14,13 @@ const MyCampaignDonors = () => {
         queryFn: async () => {
             if (currentUser?.email) {
                 const res = await axiosSecure.get(`/donations/${currentUser?.email}`);
-                console.log("donationData:", res.data);  // Check what data is returned
+                console.log("donationData:", res.data);
                 return res.data;
             }
             return [];
         }
     });
 
-    // Extract donationCampIds
     const donationCampId = donationData.map(({ _id }) => _id);
     console.log("donationCampId:", donationCampId);
     const { data: donarLists = [], } = useQuery({
@@ -28,7 +28,6 @@ const MyCampaignDonors = () => {
         queryFn: async () => {
             const donationCampIds = Array.isArray(donationCampId) ? donationCampId : [donationCampId];
             const res = await axiosSecure.get(`/my-donar-camp-list/${donationCampIds.join(',')}`);
-            // console.log("donarList:", res);
             return res.data;
         },
         enabled: donationCampId.length > 0,
@@ -39,7 +38,6 @@ const MyCampaignDonors = () => {
     return (
         <div>
             <h2 className="text-3xl text-center py-4 mb-8 bg-gray-200">My event Donor :{donarLists.length}</h2>
-
             <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
                 <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
                     <thead className="text-xs text-gray-700 uppercase dark:text-gray-400">
@@ -82,7 +80,7 @@ const MyCampaignDonors = () => {
                             <tr>
                                 <td colSpan="8" className="px-6 py-4 text-center">
                                     <img src={noDataFoundImg} className="w-56 h-48 mx-auto" alt="No data found" />
-                                    <p className="text-gray-500 text-3xl mt-2">No donations available</p>
+                                    <p className="text-gray-500 text-3xl mt-2">No data  available</p>
                                 </td>
                             </tr>
                         )}

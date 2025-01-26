@@ -1,10 +1,14 @@
 import { FaEdit } from "react-icons/fa";
+import { useState } from "react";
+import SweetPagination from "sweetpagination";
 import usePet from "../../../hooks/usePet";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import { IoLogoOctocat } from "react-icons/io";
+
 const MyAddedPet = () => {
+    const [currentPageData, setCurrentPageData] = useState([]);
     const [PetInfo] = usePet();
-    console.log(PetInfo);
+
 
     const handleUpdate = (petId) => {
 
@@ -41,7 +45,7 @@ const MyAddedPet = () => {
                     </thead>
                     <tbody>
                         {PetInfo && PetInfo.length > 0 ? (
-                            PetInfo.map((pet, index) => (
+                            currentPageData.map((pet, index) => (
                                 <tr key={pet._id} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
                                     <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                                         {index + 1}
@@ -102,6 +106,11 @@ const MyAddedPet = () => {
                     </tbody>
                 </table>
             </div>
+            <SweetPagination
+                currentPageData={setCurrentPageData}
+                getData={PetInfo}
+                dataPerPage={10}
+            />
         </div>
     );
 };

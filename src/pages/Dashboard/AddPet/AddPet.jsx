@@ -3,15 +3,15 @@ import Select from 'react-select';
 import { uploadImageToServer } from "../../../api/utils";
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
-import useAxiosPublic from '../../../hooks/useAxiosPublic';
 import toast from 'react-hot-toast';
 import { ImSpinner9 } from 'react-icons/im';
 import useAuth from '../../../hooks/useAuth';
+import useAxiosSecure from '../../../hooks/useAxiosSecure';
 
 
 const AddPet = () => {
     const { currentUser } = useAuth();
-    const axiosPublic = useAxiosPublic();
+    const axiosSecure = useAxiosSecure();
     const categories = [
         { label: 'Dog', value: 'dog' },
         { label: 'Cat', value: 'cat' },
@@ -59,7 +59,6 @@ const AddPet = () => {
                     }}
 
                     onSubmit={async (values, { setSubmitting, resetForm, setFieldError }) => {
-                        console.log("this is values", { values })
                         try {
                             // Upload image
                             const imageUrl = await uploadImageToServer(values.petImage);
@@ -85,12 +84,9 @@ const AddPet = () => {
                                 adopted: false,
                                 OwnerEmail: currentUser.email,
                             };
-                            console.log("pet info", petData)
 
-                            console.log('Adding pet:', petData);
-                            axiosPublic.post('/pets', petData)
+                            axiosSecure.post('/pets', petData)
                                 .then(res => {
-                                    console.log(res.data)
                                     if (res.data.insertedId) {
                                         toast.success("Successfully Inserted Pet Info")
                                     }

@@ -20,6 +20,7 @@ import EditDonationCampaign from "../pages/Dashboard/EditDonationCampaign/EditDo
 import DonationDetails from "../components/DonationDetails/DonationDetails";
 import MyCampaignDonors from "../pages/Dashboard/MyCampaignDonors/MyCampaignDonors";
 import MyDonationList from "../pages/Dashboard/MyDonationList/MyDonationList";
+import MyAdoptedPet from "../pages/Dashboard/MyAdoptedPet/MyAdoptedPet";
 
 
 export const router = createBrowserRouter([
@@ -107,28 +108,51 @@ export const router = createBrowserRouter([
         ),
       },
       {
+        path: 'my-adoption-pets',
+        element: (
+          <PrivateRoute>
+            <MyAdoptedPet />
+          </PrivateRoute>
+        ),
+      },
+      {
         path: 'adoption-request',
-        element: <AdoptionRequest />
+        element: <PrivateRoute>
+          <AdoptionRequest />
+        </PrivateRoute>
+
       },
       {
         path: 'add-donation',
-        element: <AddDonationCampaign />
+        element: <PrivateRoute>
+          <AddDonationCampaign />
+        </PrivateRoute>
+
       },
       {
         path: 'my-donation-campaigns',
-        element: <MyDonationCampaign />,
+        element: <PrivateRoute>
+          <MyDonationCampaign />
+        </PrivateRoute>
       },
       {
         path: 'edit-donation/:id',
-        element: <EditDonationCampaign />,
+        element: <PrivateRoute>
+          <EditDonationCampaign />
+        </PrivateRoute>
+
       },
       {
         path: 'my-donation',
-        element: < MyDonationList />,
+        element: <PrivateRoute>
+          < MyDonationList />
+        </PrivateRoute>
       },
       {
         path: 'my-donation-donar',
-        element: <MyCampaignDonors />,
+        element: <PrivateRoute>
+          <MyCampaignDonors />
+        </PrivateRoute>
       },
     ],
   },
