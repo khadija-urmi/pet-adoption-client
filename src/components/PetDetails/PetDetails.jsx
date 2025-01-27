@@ -1,16 +1,21 @@
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
-import { Link, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { FaMapMarkerAlt, FaPaw } from "react-icons/fa";
 import { SlCalender } from "react-icons/sl";
 import { LuHeartHandshake } from "react-icons/lu";
 import { RiBubbleChartFill } from "react-icons/ri";
 import { TbVaccine } from "react-icons/tb";
+import { useState } from "react";
+import AdoptPetModal from "../Modal/AdoptPetModal/AdoptPetModal";
 
 
 
 const PetDetails = () => {
     const { id } = useParams();
+    const navigate = useNavigate();
+    const [openModal, setOpenModal] = useState(false);
+
     const { data: singlePetInfo = {} } = useQuery({
         queryKey: ['singlePetInfo', id],
         queryFn: async () => {
@@ -21,7 +26,13 @@ const PetDetails = () => {
     return (
         <div className="flex justify-center items-center min-h-screen">
             <div className="max-w-3xl bg-white border border-gray-200 rounded-lg shadow-lg dark:bg-gray-800 dark:border-gray-700">
-                <img className="rounded-t-lg w-full h-[400px] object-cover" src={singlePetInfo?.petImage} alt={singlePetInfo?.petName} />
+                <div className="w-[700px]">
+                    <img
+                        className="rounded-t-lg w-full h-[400px] object-fit"
+                        src={singlePetInfo?.petImage}
+                        alt={singlePetInfo?.petName}
+                    />
+                </div>
                 <div className="p-6">
                     <div className="flex flex-col justify-between p-3 leading-normal">
                         <h5 className="mb-2 text-3xl font-bold tracking-tight text-gray-900 dark:text-white leading-loose">
@@ -42,8 +53,7 @@ const PetDetails = () => {
                         </p>
                         <p className="mb-2 font-normal text-gray-700 dark:text-gray-400 flex items-center">
                             <TbVaccine className="w-6 h-6 text-cyan-500 mr-2" />
-                            <span className="font-bold">Vaccinated : </span> {singlePetInfo?.
-                                vaccinated}
+                            <span className="font-bold">Vaccinated : </span> {singlePetInfo?.vaccinated}
                         </p>
                         <p className="mb-2 font-normal text-gray-700 dark:text-gray-400 flex items-center">
                             <FaPaw className="w-6 h-6 text-cyan-500 mr-2" />
@@ -59,14 +69,24 @@ const PetDetails = () => {
                     <h2 className="text-4xl font-bold mb-2 tracking-tight text-gray-900 dark:text-white leading-loose">About me</h2>
                     <p className="text-lg mb-3 font-normal text-gray-700 dark:text-gray-400">{singlePetInfo?.petFullDetail}</p>
                 </div>
-                <Link to={`${singlePetInfo?._id}`}>
+                <div className="flex justify-between">
                     <button
+                        onClick={() => setOpenModal(singlePetInfo)}
                         type="button"
                         className="text-white bg-gradient-to-r from-cyan-500 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-cyan-300 dark:focus:ring-cyan-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 transition duration-300 ease-in-out transform hover:scale-105">
                         Adopt Me
                     </button>
-                </Link>
+
+                    <button
+                        onClick={() => navigate(-1)}
+                        type="button"
+                        className="text-white bg-gradient-to-r from-cyan-500 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-cyan-300 dark:focus:ring-cyan-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 transition duration-300 ease-in-out transform hover:scale-105">
+                        Go Back
+                    </button>
+
+                </div>
             </div>
+            <AdoptPetModal open={openModal} setOpen={setOpenModal} pet={singlePetInfo} />
         </div>
     );
 };
