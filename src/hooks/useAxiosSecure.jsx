@@ -9,33 +9,33 @@ const axiosSecure = axios.create({
         'Content-Type': 'application/json',
     },
 })
+
 const useAxiosSecure = () => {
     const navigate = useNavigate();
-    const { logOut } = useAuth();
+    const { logOutUser } = useAuth();
 
     useEffect(() => {
         axiosSecure.interceptors.request.use((config) => {
             const token = localStorage.getItem('access-token');
             if (token) {
-                config.headers.Authorization = `Bearer ${token}`
+                config.headers.Authorization = `Bearer ${token}`;
             }
             return config;
         }, function (error) {
-            return Promise.reject(error)
+            return Promise.reject(error);
         });
+
         axiosSecure.interceptors.response.use(
             (response) => response,
             async (error) => {
                 if (error.response && (error.response.status === 401 || error.response.status === 403)) {
-                    await logOut();
-                    navigate('/login')
+                    await logOutUser();
+                    navigate('/login');
                 }
-                return Promise.reject(error)
+                return Promise.reject(error);
             }
-        )
-
-    }, [logOut, navigate])
-
+        );
+    }, [logOutUser, navigate]);
 
     return axiosSecure;
 };

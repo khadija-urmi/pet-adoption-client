@@ -9,13 +9,14 @@ import useAuth from '../../../hooks/useAuth';
 import useAxiosSecure from '../../../hooks/useAxiosSecure';
 import { useParams } from 'react-router-dom';
 import { useQuery } from "@tanstack/react-query";
+import Skeleton from 'react-loading-skeleton';
+import 'react-loading-skeleton/dist/skeleton.css';
 
 const EditPetInfo = () => {
     const { id } = useParams();
     const { currentUser } = useAuth();
     const axiosSecure = useAxiosSecure();
 
-    // Fetch the pet details for editing
     const { data: singlePet = {}, isLoading } = useQuery({
         queryKey: ['singlePet', id],
         queryFn: async () => {
@@ -36,9 +37,82 @@ const EditPetInfo = () => {
         { label: 'No', value: 'no' },
     ];
 
-    // If loading, show loading state
+
     if (isLoading) {
-        return <div>Loading...</div>;
+        return (
+            <div className="flex justify-center items-center min-h-screen bg-gradient-to-r from-teal-200 via-teal-300 to-blue-300">
+                <div className="w-full max-w-4xl p-8 bg-white rounded-lg shadow-lg my-4">
+                    <h1 className="text-3xl font-bold mb-6 text-center text-gray-800">
+                        <Skeleton width={200} />
+                    </h1>
+                    <form className="space-y-4">
+                        <div>
+                            <label className="block text-lg font-medium text-gray-700">
+                                <Skeleton width={120} />
+                            </label>
+                            <Skeleton height={40} />
+                        </div>
+
+                        <div>
+                            <label className="block text-lg font-medium text-gray-700">
+                                <Skeleton width={120} />
+                            </label>
+                            <Skeleton height={40} />
+                        </div>
+
+                        <div>
+                            <label className="block text-lg font-medium text-gray-700">
+                                <Skeleton width={120} />
+                            </label>
+                            <Skeleton height={40} />
+                        </div>
+
+                        <div>
+                            <label className="block text-lg font-medium text-gray-700">
+                                <Skeleton width={120} />
+                            </label>
+                            <Skeleton height={40} />
+                        </div>
+
+                        <div>
+                            <label className="block text-lg font-medium text-gray-700">
+                                <Skeleton width={120} />
+                            </label>
+                            <Skeleton height={40} />
+                        </div>
+
+                        <div>
+                            <label className="block text-lg font-medium text-gray-700">
+                                <Skeleton width={120} />
+                            </label>
+                            <Skeleton height={40} />
+                        </div>
+
+                        <div>
+                            <label className="block text-lg font-medium text-gray-700">
+                                <Skeleton width={120} />
+                            </label>
+                            <Skeleton height={40} />
+                        </div>
+
+                        <div>
+                            <label className="block text-lg font-medium text-gray-700">
+                                <Skeleton width={120} />
+                            </label>
+                            <Skeleton height={40} />
+                        </div>
+
+                        <button
+                            type="submit"
+                            disabled
+                            className="w-full p-3 bg-blue-500 text-white font-bold rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        >
+                            <ImSpinner9 className="animate-spin text-white m-auto" />
+                        </button>
+                    </form>
+                </div>
+            </div>
+        );
     }
 
     const handleSubmit = async (values, { setSubmitting, resetForm, setFieldError }) => {
@@ -123,7 +197,6 @@ const EditPetInfo = () => {
                         setFieldValue,
                         isSubmitting,
                     }) => (
-
                         <form onSubmit={handleSubmit} className="space-y-4">
                             <div>
                                 <label className="block text-lg font-medium text-gray-700">Pet Name</label>
@@ -153,7 +226,6 @@ const EditPetInfo = () => {
 
                             <div>
                                 <label className="block text-lg font-medium text-gray-700">Pet Category</label>
-                                {/* React Select */}
                                 <Select
                                     name="petCategory"
                                     options={categories}
@@ -167,7 +239,6 @@ const EditPetInfo = () => {
 
                             <div>
                                 <label className="block text-lg font-medium text-gray-700">Vaccinated</label>
-                                {/* React Select */}
                                 <Select
                                     name="vaccinated"
                                     options={vaccinated}
@@ -205,7 +276,6 @@ const EditPetInfo = () => {
                                 {errors.shortDescription && touched.shortDescription && <div className="text-red-500 text-sm">{errors.shortDescription}</div>}
                             </div>
 
-                            {/* ReactQuill */}
                             <div>
                                 <label className="block text-lg font-medium text-gray-700">Long Description</label>
                                 <ReactQuill

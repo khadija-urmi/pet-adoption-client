@@ -8,7 +8,6 @@ import SignUp from "../pages/SignUp/SignUp";
 import PrivateRoute from "./PrivateRoute";
 import MyProfile from "../pages/MyProfile/MyProfile";
 import DashboardLayout from "../layouts/DashboardLayout";
-import Statistics from "../pages/Statistics/Statistics";
 import AddPet from "../pages/Dashboard/AddPet/AddPet";
 import AllUser from "../pages/Dashboard/AllUser/AllUser";
 import MyAddedPet from "../pages/Dashboard/MyAddedPet/MyAddedPet";
