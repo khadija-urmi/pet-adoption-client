@@ -6,9 +6,11 @@ import { useNavigate } from "react-router-dom";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import toast from "react-hot-toast";
 import { IoLogoOctocat, IoMdCheckmark } from "react-icons/io";
+import useAxiosPublic from "../../../hooks/useAxiosPublic";
 
 const AllPetLists = () => {
     const navigate = useNavigate();
+    const axiosPublic = useAxiosPublic();
     const axiosSecure = useAxiosSecure();
 
     const { data: allPetInfo = [], refetch } = useQuery({
@@ -31,7 +33,7 @@ const AllPetLists = () => {
     };
     const handleAdopt = async (petId) => {
         await
-            axios.patch(`http://localhost:5000/pet-adopted/${petId}`, { adopted: true });
+            axiosPublic.patch(`/pet-adopted/${petId}`, { adopted: true });
         refetch();
         toast.success("Now This Pet is Adopted 👍")
     }

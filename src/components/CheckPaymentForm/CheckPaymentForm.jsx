@@ -1,9 +1,9 @@
 import { CardElement, useElements, useStripe } from "@stripe/react-stripe-js";
 import { useEffect, useState } from "react";
-import useAxiosSecure from "../../hooks/useAxiosSecure";
 import useAuth from "../../hooks/useAuth";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
+import useAxiosPublic from "../../hooks/useAxiosPublic";
 
 
 const CheckPaymentForm = ({ amount, donationCamp }) => {
@@ -15,19 +15,19 @@ const CheckPaymentForm = ({ amount, donationCamp }) => {
     const [transactionId, setTransactionId] = useState('');
     const stripe = useStripe();
     const elements = useElements();
-    const axiosSecure = useAxiosSecure();
+    const axiosPublic = useAxiosPublic();
     const { currentUser } = useAuth();
     const navigate = useNavigate();
 
     useEffect(() => {
         if (amount) {
-            axiosSecure.post('/create-payment-intent', { price: amount })
+            axiosPublic.post('/create-payment-intent', { price: amount })
                 .then(res => {
 
                     setClientSecret(res.data.clientSecret);
                 })
         }
-    }, [axiosSecure, amount])
+    }, [axiosPublic, amount])
 
     //calculating the totalCollectDonation
     const amountInt = parseInt(amount)
@@ -85,10 +85,10 @@ const CheckPaymentForm = ({ amount, donationCamp }) => {
                     donationCampId: _id,
                     donationEventName: petName,
                 }
-                const res = await axiosSecure.post('/save-donation-pay', DonarData);
+                const res = await axiosPublic.post('/save-donation-pay', DonarData);
                 console.log(res.data);
                 if (res.data?.insertedId) {
-                    const res = await axiosSecure.patch(`my-donations-camp/${_id}`, { totalDonationAmount: totalCollectDonateAmount })
+                    const res = await axiosPublic.patch(`my-donations-camp/${_id}`, { totalDonationAmount: totalCollectDonateAmount })
                     if (res.data?.modifiedCount > 0) {
                         toast.success("Successfully donate money 🎉")
                     }

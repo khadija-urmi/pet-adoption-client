@@ -1,5 +1,4 @@
 import { useQuery } from "@tanstack/react-query";
-import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
 import { FaMapMarkerAlt, FaPaw } from "react-icons/fa";
 import { SlCalender } from "react-icons/sl";
@@ -8,18 +7,20 @@ import { RiBubbleChartFill } from "react-icons/ri";
 import { TbVaccine } from "react-icons/tb";
 import { useState } from "react";
 import AdoptPetModal from "../Modal/AdoptPetModal/AdoptPetModal";
+import useAxiosPublic from "../../hooks/useAxiosPublic";
 
 
 
 const PetDetails = () => {
     const { id } = useParams();
     const navigate = useNavigate();
+    const axiosPublic = useAxiosPublic();
     const [openModal, setOpenModal] = useState(false);
 
     const { data: singlePetInfo = {} } = useQuery({
         queryKey: ['singlePetInfo', id],
         queryFn: async () => {
-            const res = await axios.get(`http://localhost:5000/my-added-pet/${id}`);
+            const res = await axiosPublic.get(`/my-added-pet/${id}`);
             return res.data;
         },
     });

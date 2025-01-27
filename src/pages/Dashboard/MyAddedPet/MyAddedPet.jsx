@@ -49,6 +49,7 @@ const MyAddedPet = () => {
             const updatedPetInfo = PetInfo.map(pet =>
                 pet._id === petId ? { ...pet, adopted: true } : pet
             );
+
             setCurrentPageData(updatedPetInfo);
             toast.success("Now This Pet is Adopted 👍")
         } catch (error) {

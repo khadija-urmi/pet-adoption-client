@@ -19,7 +19,6 @@ import EditDonationCampaign from "../pages/Dashboard/EditDonationCampaign/EditDo
 import DonationDetails from "../components/DonationDetails/DonationDetails";
 import MyCampaignDonors from "../pages/Dashboard/MyCampaignDonors/MyCampaignDonors";
 import MyDonationList from "../pages/Dashboard/MyDonationList/MyDonationList";
-import MyAdoptedPet from "../pages/Dashboard/MyAdoptedPet/MyAdoptedPet";
 import AllPetLists from "../pages/Dashboard/AllPetLists/AllPetLists";
 import AllDonationLists from "../pages/Dashboard/AllDonationLists/AllDonationLists"
 import EditPetInfo from "../pages/Dashboard/EditPetInfo/EditPetInfo"
@@ -114,26 +113,16 @@ export const router = createBrowserRouter([
         ),
       },
       {
-        path: 'my-adoption-pets',
-        element: (
-          <PrivateRoute>
-            <MyAdoptedPet />
-          </PrivateRoute>
-        ),
-      },
-      {
         path: 'adoption-request',
         element: <PrivateRoute>
           <AdoptionRequest />
         </PrivateRoute>
-
       },
       {
         path: 'add-donation',
         element: <PrivateRoute>
           <AddDonationCampaign />
         </PrivateRoute>
-
       },
       {
         path: 'my-donation-campaigns',

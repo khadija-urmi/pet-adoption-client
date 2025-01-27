@@ -9,11 +9,13 @@ import PropTypes from "prop-types";
 const AdoptPetModal = ({ open, setOpen, pet }) => {
     const { currentUser } = useAuth();
     const axiosPublic = useAxiosPublic();
+    console.log(pet);
 
     const [formData, setFormData] = useState({
         petId: "",
         petName: "",
         petImage: "",
+        OwnerEmail: "",
         userName: currentUser?.displayName || "",
         userEmail: currentUser?.email || "",
         phoneNumber: "",
@@ -26,6 +28,7 @@ const AdoptPetModal = ({ open, setOpen, pet }) => {
                 petId: pet._id || "",
                 petName: pet.petName || "",
                 petImage: pet.petImage || "",
+                OwnerEmail: pet.OwnerEmail || "",
                 userName: currentUser?.displayName || "",
                 userEmail: currentUser?.email || "",
                 phoneNumber: "",
@@ -154,7 +157,8 @@ AdoptPetModal.propTypes = {
     pet: PropTypes.shape({
         _id: PropTypes.string,
         petName: PropTypes.string,
-        petImage: PropTypes.string
+        petImage: PropTypes.string,
+        OwnerEmail: PropTypes.string
     }).isRequired
 };
 

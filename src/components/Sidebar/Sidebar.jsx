@@ -1,4 +1,4 @@
-import { AiFillCheckCircle } from 'react-icons/ai';
+
 import { BsQuestionDiamondFill } from 'react-icons/bs';
 import { FaShoppingCart, FaHome, FaCalendarAlt, FaCreditCard, FaDollarSign } from 'react-icons/fa';
 import { PiUsersThreeFill } from "react-icons/pi";
@@ -30,12 +30,6 @@ const Sidebar = () => {
                     <NavLink to="add-pet" className={getNavLinkClass}>
                         <FaShoppingCart className="w-5 h-5  mr-2" />
                         <span className="hidden md:inline">Add a pet</span>
-                    </NavLink>
-                </li>
-                <li className="relative group">
-                    <NavLink to="my-adoption-pets" className={getNavLinkClass}>
-                        <AiFillCheckCircle className="w-5 h-5  mr-2" />
-                        <span className="hidden md:inline">Adopted Pet</span>
                     </NavLink>
                 </li>
                 <li className="relative group">
