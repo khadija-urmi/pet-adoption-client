@@ -67,11 +67,7 @@ const Navbar = () => {
                                 <ul className="py-2" aria-labelledby="user-menu-button">
                                     <Link to="dashboard" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Dashboard
                                     </Link>
-                                    {/* TODO: Add route here */}
-                                    <Link to="add-route" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">
-                                        My Adopted Pet
-                                    </Link>
-                                    <Link to="my-profile" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">My Profile
+                                    <Link to="/my-profile" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">My Profile
                                     </Link>
                                     <li>
                                         <button onClick={logOutUser} className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Sign Out</button>

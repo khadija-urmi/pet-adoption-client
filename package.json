@@ -35,11 +35,13 @@
     "react-loader-spinner": "^6.1.6",
     "react-loading-skeleton": "^3.5.0",
     "react-quill": "^2.0.0",
+    "react-responsive-carousel": "^3.2.23",
     "react-router-dom": "^7.1.1",
     "react-select": "^5.9.0",
     "react-tabs": "^6.1.0",
     "sort-by": "^1.2.0",
-    "sweetpagination": "^1.0.15"
+    "sweetpagination": "^1.0.15",
+    "swiper": "^11.2.1"
   },
   "devDependencies": {
     "@eslint/js": "^9.17.0",

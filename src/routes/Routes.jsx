@@ -53,6 +53,14 @@ export const router = createBrowserRouter([
         element: <DonationDetails />,
       },
       {
+        path: 'my-profile',
+        element: (
+          <PrivateRoute>
+            <MyProfile />
+          </PrivateRoute>
+        ),
+      },
+      {
         path: "/login",
         element: <Login />
       },
@@ -85,14 +93,6 @@ export const router = createBrowserRouter([
         element: (
           <PrivateRoute>
             <AllUser />
-          </PrivateRoute>
-        ),
-      },
-      {
-        path: 'my-profile',
-        element: (
-          <PrivateRoute>
-            <MyProfile />
           </PrivateRoute>
         ),
       },
