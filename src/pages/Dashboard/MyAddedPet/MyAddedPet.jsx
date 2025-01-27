@@ -3,10 +3,11 @@ import SweetPagination from "sweetpagination";
 import { useNavigate } from "react-router-dom";
 import { FaEdit } from "react-icons/fa";
 import { RiDeleteBin6Line } from "react-icons/ri";
-import { IoLogoOctocat } from "react-icons/io";
+import { IoLogoOctocat, IoMdCheckmark } from "react-icons/io";
 import usePet from "../../../hooks/usePet";
 import axios from "axios";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
+import toast from "react-hot-toast";
 
 const MyAddedPet = () => {
     const axiosSecure = useAxiosSecure();
@@ -27,10 +28,9 @@ const MyAddedPet = () => {
     };
 
     const confirmDelete = async () => {
-        console.log("Deleting pet with ID:", deletePetId);
         try {
             await axiosSecure.delete(`/pets/${deletePetId}`);
-            console.log("Pet deleted successfully");
+            toast.success("Pet deleted successfully");
             setShowDeleteModal(false);
             setCurrentPageData(currentPageData.filter(pet => pet._id !== deletePetId));
         } catch (error) {
@@ -44,13 +44,16 @@ const MyAddedPet = () => {
 
     const handleAdopt = async (petId) => {
         try {
-            await axios.patch(`http://localhost:5000/pets/adopt/${petId}`);
+            await
+                axios.patch(`http://localhost:5000/pet-adopted/${petId}`);
             const updatedPetInfo = PetInfo.map(pet =>
                 pet._id === petId ? { ...pet, adopted: true } : pet
             );
             setCurrentPageData(updatedPetInfo);
+            toast.success("Now This Pet is Adopted 👍")
         } catch (error) {
             console.error("Error adopting pet:", error);
+            toast.error("Failed to Adopted The Pet 💔")
         }
     };
 
@@ -71,7 +74,7 @@ const MyAddedPet = () => {
                             <th scope="col" className="px-6 py-3">Adoption Status</th>
                             <th scope="col" className="px-6 py-3">Update</th>
                             <th scope="col" className="px-6 py-3">Delete</th>
-                            <th scope="col" className="px-6 py-3">Adopt Now</th>
+                            <th scope="col" className="px-6 py-3">Adopt Status</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -111,17 +114,28 @@ const MyAddedPet = () => {
                                         </button>
                                     </td>
                                     <td className="px-6 py-4">
-                                        {!pet.adopted && (
-                                            <button
-                                                onClick={() => handleAdopt(pet._id)}
-                                                className="relative inline-flex items-center justify-center p-0.5 mb-2 me-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-red-200 via-red-300 to-yellow-200 group-hover:from-red-200 group-hover:via-red-300 group-hover:to-yellow-200 dark:text-white dark:hover:text-gray-900 focus:ring-4 focus:outline-none focus:ring-red-100 dark:focus:ring-red-400"
-                                                aria-label="Adopt pet"
-                                            >
-                                                <span className="relative px-5 py-2.5 flex justify-between items-center transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-opacity-0">
-                                                    Adopt <IoLogoOctocat className="w-4 h-4 ml-2" />
-                                                </span>
-                                            </button>
-                                        )}
+                                        {
+                                            !pet.adopted ? (
+                                                <button
+                                                    onClick={() => handleAdopt(pet._id)}
+                                                    className="relative inline-flex items-center justify-center p-0.5 mb-2 me-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-red-200 via-red-300 to-yellow-200 group-hover:from-red-200 group-hover:via-red-300 group-hover:to-yellow-200 dark:text-white dark:hover:text-gray-900 focus:ring-4 focus:outline-none focus:ring-red-100 dark:focus:ring-red-400"
+                                                    aria-label="Adopt pet"
+                                                >
+                                                    <span className="relative px-5 py-2.5 flex justify-between items-center transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-opacity-0">
+                                                        Adopt <IoLogoOctocat className="w-4 h-4 ml-2" />
+                                                    </span>
+                                                </button>
+                                            ) : (
+                                                <button
+                                                    className="relative inline-flex items-center justify-center p-0.5 mb-2 me-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-green-200 via-green-300 to-yellow-200 group-hover:from-green-200 group-hover:via-green-300 group-hover:to-yellow-200 dark:text-white dark:hover:text-gray-900 focus:ring-4 focus:outline-none focus:ring-green-100 dark:focus:ring-green-400"
+                                                    aria-label="Adopted pet"
+                                                >
+                                                    <span className="relative px-5 py-2.5 flex justify-between items-center transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-opacity-0">
+                                                        Adopted <IoMdCheckmark className="w-4 h-4 ml-2" />
+                                                    </span>
+                                                </button>
+                                            )
+                                        }
                                     </td>
                                 </tr>
                             ))

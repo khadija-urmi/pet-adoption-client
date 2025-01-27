@@ -2,9 +2,16 @@ import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { FaEdit } from "react-icons/fa";
 import { RiDeleteBin6Line } from "react-icons/ri";
+import { useNavigate } from "react-router-dom";
+import useAxiosSecure from "../../../hooks/useAxiosSecure";
+import toast from "react-hot-toast";
+import { IoLogoOctocat, IoMdCheckmark } from "react-icons/io";
 
 const AllPetLists = () => {
-    const { data: allPetInfo = [] } = useQuery({
+    const navigate = useNavigate();
+    const axiosSecure = useAxiosSecure();
+
+    const { data: allPetInfo = [], refetch } = useQuery({
         queryKey: ['allPetInfo'],
         queryFn: async () => {
             const res = await axios.get("http://localhost:5000/pets");
@@ -14,13 +21,20 @@ const AllPetLists = () => {
 
     console.log(allPetInfo);
     const handleUpdate = (petId) => {
-
-        console.log("Updating pet with ID:", petId);
+        navigate(`/dashboard/my-edit-pet/${petId}`)
     };
 
-    const handleDelete = (petId) => {
-        console.log("Deleting pet with ID:", petId);
+    const handleDelete = async (petId) => {
+        await axiosSecure.delete(`/pets/${petId}`);
+        refetch();
+        toast.success("Pet deleted successfully");
     };
+    const handleAdopt = async (petId) => {
+        await
+            axios.patch(`http://localhost:5000/pet-adopted/${petId}`, { adopted: true });
+        refetch();
+        toast.success("Now This Pet is Adopted 👍")
+    }
     return (
         <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
             <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
@@ -59,7 +73,28 @@ const AllPetLists = () => {
                                 {pet?.OwnerEmail}
                             </td>
                             <td className="px-6 py-4 bg-gray-50 dark:bg-gray-800">
-                                {pet?.adopted ? "Adopted" : "Not adopted"}
+                                {
+                                    !pet.adopted ? (
+                                        <button
+                                            onClick={() => handleAdopt(pet._id)}
+                                            className="relative inline-flex items-center justify-center p-0.5 mb-2 me-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-red-200 via-red-300 to-yellow-200 group-hover:from-red-200 group-hover:via-red-300 group-hover:to-yellow-200 dark:text-white dark:hover:text-gray-900 focus:ring-4 focus:outline-none focus:ring-red-100 dark:focus:ring-red-400"
+                                            aria-label="Adopt pet"
+                                        >
+                                            <span className="relative px-5 py-2.5 flex justify-between items-center transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-opacity-0">
+                                                Adopt <IoLogoOctocat className="w-4 h-4 ml-2" />
+                                            </span>
+                                        </button>
+                                    ) : (
+                                        <button
+                                            className="relative inline-flex items-center justify-center p-0.5 mb-2 me-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-green-200 via-green-300 to-yellow-200 group-hover:from-green-200 group-hover:via-green-300 group-hover:to-yellow-200 dark:text-white dark:hover:text-gray-900 focus:ring-4 focus:outline-none focus:ring-green-100 dark:focus:ring-green-400"
+                                            aria-label="Adopted pet"
+                                        >
+                                            <span className="relative px-5 py-2.5 flex justify-between items-center transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-opacity-0">
+                                                Adopted <IoMdCheckmark className="w-4 h-4 ml-2" />
+                                            </span>
+                                        </button>
+                                    )
+                                }
                             </td>
                             <td className="px-6 py-4 bg-gray-50 dark:bg-gray-800">
                                 <button

@@ -5,7 +5,6 @@ import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import toast from 'react-hot-toast';
 import { ImSpinner9 } from 'react-icons/im';
-import useAuth from '../../../hooks/useAuth';
 import useAxiosSecure from '../../../hooks/useAxiosSecure';
 import { useParams } from 'react-router-dom';
 import { useQuery } from "@tanstack/react-query";
@@ -14,7 +13,6 @@ import 'react-loading-skeleton/dist/skeleton.css';
 
 const EditPetInfo = () => {
     const { id } = useParams();
-    const { currentUser } = useAuth();
     const axiosSecure = useAxiosSecure();
 
     const { data: singlePet = {}, isLoading } = useQuery({
@@ -24,6 +22,8 @@ const EditPetInfo = () => {
             return res.data;
         },
     });
+    console.log("pet id", id)
+    console.log("singlePet id is", singlePet._id)
 
     const categories = [
         { label: 'Dog', value: 'dog' },
@@ -137,13 +137,10 @@ const EditPetInfo = () => {
                 ...remainingValues,
                 petImage: imageUrl,
                 petFullDetail: petFullDetails,
-                addedAt: new Date().toISOString(),
                 adopted: singlePet.adopted,
-                OwnerEmail: currentUser.email,
             };
 
-            // Update the pet data
-            await axiosSecure.patch(`/pets/${id}`, petData);
+            await axiosSecure.patch(`/my-pet/${singlePet._id}`, petData);
             toast.success("Pet updated successfully!");
             resetForm();
             setSubmitting(false);

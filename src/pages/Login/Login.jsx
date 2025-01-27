@@ -26,13 +26,11 @@ const Login = () => {
 
     const onSubmit = async (data) => {
         const { email, password } = data;
-        console.log(password, email);
         try {
             signIn(email, password)
                 .then(result => {
                     const user = result.user;
                     console.log(user);
-                    console.log("User Log In successfully");
                     toast.success('Successfully Log In!');
                     navigate(from, { replace: true })
                 })
