@@ -97,7 +97,7 @@ const Navbar = () => {
                 </div>
 
                 {/* For small devices (Dropdown) */}
-                {menuOpen && <div className={`absolute left-0 right-0 top-12 bg-white shadow-lg p-2  rounded-lg ${menuOpen ? "" : "hidden"}`} >
+                {menuOpen && <div className={`absolute z-50 left-0 right-0 top-12 bg-white shadow-lg p-2  rounded-lg ${menuOpen ? "" : "hidden"}`} >
                     <ul className="flex flex-col space-y-2 font-medium p-4 mt-2 border border-gray-100 rounded-lg bg-gray-200 rtl:space-x-reverse ">
                         {links}
                         <li>
@@ -110,7 +110,9 @@ const Navbar = () => {
                 </div>}
 
                 {/* Flex layout for large devices */}
-                <div className={`items-center justify-between hidden w-full md:flex md:text-sm lg:text-base md:w-auto md:order-1 ${menuOpen ? "hidden" : ""}`} id="navbar-user">
+                <div className={`items-center justify-between hidden w-full md:flex md:text-sm lg:text-base md:w-auto md:order-1 ${menuOpen ? "hidden" : ""}`} id="navbar-user"
+                    style={{ zIndex: 10 }}
+                >
                     <ul className="flex md:flex-row font-medium p-4 md:p-0 mt-4 md:space-x-8 rtl:space-x-reverse md:mt-0 md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
                         {links}
                     </ul>

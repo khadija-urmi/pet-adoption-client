@@ -5,7 +5,7 @@ const Footer = () => {
     return (
         <footer className="bg-gray-50 dark:bg-gray-900 py-10">
             <div className="mx-auto w-full max-w-screen-xl p-4 lg:py-6">
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-12"> {/* Increased gap */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-12">
                     <div className="flex flex-col items-center sm:items-start">
                         <a href="/" className="flex items-center mb-6">
                             <img src={logoImg} alt="WoofWow Logo" className="h-10 mr-3" />
@@ -33,13 +33,13 @@ const Footer = () => {
                         <h2 className="text-xl font-semibold text-gray-800 dark:text-white mb-4">Contact Us</h2>
                         <ul className="text-gray-500 dark:text-gray-400">
                             <li className="mb-2">
-                                <span className="font-semibold">Phone:</span> (123) 456-789
+                                <span className="font-semibold">Phone:</span> 01848232345
                             </li>
                             <li className="mb-2">
-                                <span className="font-semibold">Email:</span> email@yoursite.com
+                                <span className="font-semibold">Email:</span> WoofWOw@gmail.com
                             </li>
                             <li>
-                                <span className="font-semibold">Address:</span> Pet Street 123, New York
+                                <span className="font-semibold">Address:</span> Pet Street 123, Malibag, Dhaka
                             </li>
                         </ul>
                     </div>
@@ -59,7 +59,6 @@ const Footer = () => {
                     </div>
                 </div>
 
-                {/* Bottom Copyright Section */}
                 <hr className="my-6 border-gray-200 dark:border-gray-700" />
                 <div className="flex justify-between items-center">
                     <span className="text-sm text-gray-500 dark:text-gray-400">

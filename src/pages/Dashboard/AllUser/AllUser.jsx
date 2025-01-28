@@ -71,15 +71,13 @@ const AllUser = () => {
                                         </button> :
                                             <button
                                                 onClick={() => handleMakeAdmin(user)}
-                                                className="btn btn-lg p-2 bg-purple-500 rounded-md">
+                                                className="btn btn-lg p-2 bg-purple-500 rounded-md flex justify-center items-center">
                                                 <FaUser className="text-white 
                                         w-4 h-4 rounded-md"></FaUser>
+                                                <span className="text-white">User</span>
                                             </button>
-                                            // <RiAdminFill />
+
                                         }
-                                    </td>
-                                    <td className="px-6 py-4">
-                                        <a href="#" className="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
                                     </td>
                                 </tr>
                             ))
