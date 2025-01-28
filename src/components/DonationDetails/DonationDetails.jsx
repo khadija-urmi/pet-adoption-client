@@ -30,7 +30,7 @@ const DonationDetails = () => {
             <Helmet>
                 <title>WoofWow | DonationDetails</title>
             </Helmet>
-            <div className="flex justify-center items-center min-h-screen">
+            <div className="flex justify-center items-center min-h-screen dark:bg-gray-800">
                 <div className="max-w-3xl bg-white border border-gray-200 rounded-lg shadow-lg dark:bg-gray-800 dark:border-gray-700">
                     <img className="rounded-t-lg w-full h-[400px] object-cover" src={singleDataDonation?.petPicture} alt={singleDataDonation?.petName} />
                     <div className="p-6">

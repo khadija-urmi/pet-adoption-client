@@ -37,9 +37,9 @@ const AddPet = () => {
             <Helmet>
                 <title>Create Pet | WoofWow</title>
             </Helmet>
-            <div className="flex justify-center items-center min-h-screen bg-gradient-to-r from-blue-100 via-blue-200 to-blue-300">
-                <div className="w-full max-w-4xl p-8 bg-white rounded-lg shadow-lg my-4">
-                    <h1 className="text-3xl font-bold mb-6 text-center text-gray-800">Add Pet</h1>
+            <div className="flex justify-center items-center min-h-screen bg-gradient-to-r from-blue-100 via-blue-200 to-blue-300 dark:bg-gray-900 dark:text-white">
+                <div className="w-full max-w-4xl p-8 bg-white rounded-lg shadow-lg my-4 dark:bg-gray-800 dark:border dark:border-gray-700">
+                    <h1 className="text-3xl font-bold mb-6 text-center text-gray-800 dark:text-white">Add Pet</h1>
                     <Formik
                         initialValues={{
                             petName: '',
@@ -122,33 +122,33 @@ const AddPet = () => {
                             //form start....
                             <form onSubmit={handleSubmit} className="space-y-4">
                                 <div>
-                                    <label className="block text-lg font-medium text-gray-700">Pet Name</label>
+                                    <label className="block text-lg font-medium text-gray-700 dark:text-white">Pet Name</label>
                                     <input
                                         type="text"
                                         name="petName"
                                         onChange={handleChange}
                                         onBlur={handleBlur}
                                         value={values.petName}
-                                        className="w-full p-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                        className="w-full p-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
                                     />
                                     {errors.petName && touched.petName && <div className="text-red-500 text-sm">{errors.petName}</div>}
                                 </div>
 
                                 <div>
-                                    <label className="block text-lg font-medium text-gray-700">Pet Age</label>
+                                    <label className="block text-lg font-medium text-gray-700 dark:text-white">Pet Age</label>
                                     <input
                                         type="number"
                                         name="petAge"
                                         onChange={handleChange}
                                         onBlur={handleBlur}
                                         value={values.petAge}
-                                        className="w-full p-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                        className="w-full p-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
                                     />
                                     {errors.petAge && touched.petAge && <div className="text-red-500 text-sm">{errors.petAge}</div>}
                                 </div>
 
                                 <div>
-                                    <label className="block text-lg font-medium text-gray-700">Pet Category</label>
+                                    <label className="block text-lg font-medium text-gray-700 dark:text-white">Pet Category</label>
                                     {/* React Select */}
                                     <Select
                                         name="petCategory"
@@ -156,12 +156,12 @@ const AddPet = () => {
                                         onChange={(selectedOption) => setFieldValue('petCategory', selectedOption ? selectedOption.value : '')}
                                         value={values.petCategory ? categories.find(option => option.value === values.petCategory) : null}
                                         onBlur={handleBlur}
-                                        className="w-full p-3 h-12 rounded-md shadow-sm"
+                                        className="w-full p-3 h-12 rounded-md shadow-sm dark:bg-gray-700 dark:border-gray-600 dark:text-white"
                                     />
                                     {errors.petCategory && touched.petCategory && <div className="text-red-500 text-sm">{errors.petCategory}</div>}
                                 </div>
                                 <div>
-                                    <label className="block text-lg font-medium text-gray-700">Pet Vaccinate</label>
+                                    <label className="block text-lg font-medium text-gray-700 dark:text-white">Pet Vaccinate</label>
                                     {/* React Select */}
                                     <Select
                                         name="vaccinated"
@@ -169,48 +169,48 @@ const AddPet = () => {
                                         onChange={(selectedOption) => setFieldValue('vaccinated', selectedOption ? selectedOption.value : '')}
                                         value={values.vaccinated ? vaccinated.find(option => option.value === values.vaccinated) : null}
                                         onBlur={handleBlur}
-                                        className="w-full p-3 h-12 rounded-md shadow-sm"
+                                        className="w-full p-3 h-12 rounded-md shadow-sm dark:bg-gray-700 dark:border-gray-600 dark:text-white"
                                     />
                                     {errors.vaccinated && touched.vaccinated && <div className="text-red-500 text-sm">{errors.vaccinated}</div>}
                                 </div>
                                 <div>
-                                    <label className="block text-lg font-medium text-gray-700">Pet Location</label>
+                                    <label className="block text-lg font-medium text-gray-700 dark:text-white">Pet Location</label>
                                     <input
                                         type="text"
                                         name="petLocation"
                                         onChange={handleChange}
                                         onBlur={handleBlur}
                                         value={values.petLocation}
-                                        className="w-full p-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                        className="w-full p-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
                                     />
                                     {errors.petLocation && touched.petLocation && <div className="text-red-500 text-sm">{errors.petLocation}</div>}
                                 </div>
 
                                 <div>
-                                    <label className="block text-lg font-medium text-gray-700">Short Description</label>
+                                    <label className="block text-lg font-medium text-gray-700 dark:text-white">Short Description</label>
                                     <input
                                         type="text"
                                         name="shortDescription"
                                         onChange={handleChange}
                                         onBlur={handleBlur}
                                         value={values.shortDescription}
-                                        className="w-full p-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                        className="w-full p-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
                                     />
                                     {errors.shortDescription && touched.shortDescription && <div className="text-red-500 text-sm">{errors.shortDescription}</div>}
                                 </div>
                                 {/* React Quil  */}
                                 <div>
-                                    <label className="block text-lg font-medium text-gray-700">Long Description</label>
+                                    <label className="block text-lg font-medium text-gray-700 dark:text-white">Long Description</label>
                                     <ReactQuill n
                                         value={values.longDescription}
                                         onChange={(content) => setFieldValue('longDescription', content)}
-                                        className="w-full border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                        className="w-full border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
                                     />
                                     {errors.longDescription && touched.longDescription && <div className="text-red-500 text-sm">{errors.longDescription}</div>}
                                 </div>
 
                                 <div>
-                                    <label className="block text-lg font-medium text-gray-700">Pet Image</label>
+                                    <label className="block text-lg font-medium text-gray-700 dark:text-white">Pet Image</label>
                                     <input
                                         type="file"
                                         name="petImage"
@@ -218,7 +218,7 @@ const AddPet = () => {
                                             const file = event.target.files[0];
                                             setFieldValue('petImage', file);
                                         }}
-                                        className="w-full p-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                        className="w-full p-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
                                     />
                                     {errors.petImage && touched.petImage && <div className="text-red-500 text-sm">{errors.petImage}</div>}
                                 </div>

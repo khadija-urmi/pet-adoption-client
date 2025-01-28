@@ -2,14 +2,29 @@
 import { BsQuestionDiamondFill } from 'react-icons/bs';
 import { FaShoppingCart, FaHome, FaCalendarAlt, FaCreditCard, FaDollarSign } from 'react-icons/fa';
 import { PiUsersThreeFill } from "react-icons/pi";
-import { IoCreateSharp } from 'react-icons/io5';
+import { IoCreateSharp, IoMoon, IoSunny } from 'react-icons/io5';
 import { MdOutlineAddCircle, MdPlaylistAddCheckCircle } from 'react-icons/md';
 import { NavLink } from 'react-router-dom';
 import { LuDog } from 'react-icons/lu';
 import useAdmin from '../../hooks/useAdmin';
+import { useEffect, useState } from 'react';
 
 const Sidebar = () => {
     const [isAdmin] = useAdmin();
+    const [darkMode, setDarkMode] = useState(false);
+
+    const toggleDarkMode = () => {
+        setDarkMode(!darkMode);
+    };
+
+    useEffect(() => {
+        if (localStorage.getItem('color-theme') === 'dark' || (darkMode)) {
+            document.documentElement.classList.add('dark');
+        } else {
+            document.documentElement.classList.remove('dark');
+        }
+    }, [darkMode]);
+
 
     const getNavLinkClass = ({ isActive }) =>
         isActive
@@ -18,7 +33,16 @@ const Sidebar = () => {
 
     return (
         <div className="bg-gray-800 text-white h-screen px-4 fixed w-20 md:w-64 border-r border-gray-300 dark:border-gray-600 dark:bg-gray-900 dark:text-white">
-            <h1 className="text-xl font-bold hidden md:block mt-4 ml-6 ">WoofWow</h1>
+            <div className='flex justify-center items-center'>
+                <h1 className="text-xl font-bold hidden md:block mt-4 ml-6 ">WoofWow</h1>
+                <button
+                    type="button"
+                    onClick={toggleDarkMode}
+                    className="text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700   dark:focus:ring-gray-700 rounded-lg text-sm p-3 "
+                >
+                    {darkMode ? <IoSunny className="w-5 h-5 ml-3" /> : <IoMoon className="w-5 h-5 ml-3" />}
+                </button>
+            </div>
             <ul className="flex flex-col mt-3 space-y-1">
                 <li className="relative group">
                     <NavLink to="/" className={getNavLinkClass}>

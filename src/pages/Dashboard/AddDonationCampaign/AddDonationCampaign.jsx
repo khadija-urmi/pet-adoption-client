@@ -16,7 +16,7 @@ const AddDonationCampaign = () => {
             <Helmet>
                 <title>Create Donation Campaign | WoofWow</title>
             </Helmet>
-            <div className="max-w-xl mx-auto p-6 bg-white rounded-lg shadow-lg">
+            <div className="max-w-xl mx-auto p-6 bg-white rounded-lg shadow-lg dark:bg-gray-800 dark:text-white">
                 <h2 className="text-2xl font-semibold mb-4">Create Donation Campaign</h2>
 
                 <Formik
@@ -79,7 +79,7 @@ const AddDonationCampaign = () => {
                     }) => (
                         <form onSubmit={handleSubmit} className="space-y-4">
                             <div>
-                                <label className="block text-lg font-medium text-gray-700">Pet Name</label>
+                                <label className="block text-lg font-medium text-gray-700 dark:text-white">Pet Name</label>
                                 <input
                                     type="text"
                                     name="petName"
@@ -92,7 +92,7 @@ const AddDonationCampaign = () => {
                             </div>
 
                             <div>
-                                <label className="block text-sm font-medium text-gray-700">Pet Picture</label>
+                                <label className="block text-sm font-medium text-gray-700 dark:text-white">Pet Picture</label>
                                 <input
                                     type="file"
                                     name="petPicture"
@@ -106,7 +106,7 @@ const AddDonationCampaign = () => {
                             </div>
 
                             <div>
-                                <label className="block text-sm font-medium text-gray-700">Maximum Donation Amount</label>
+                                <label className="block text-sm font-medium text-gray-700 dark:text-white">Maximum Donation Amount</label>
                                 <input
                                     type="number"
                                     name="maxDonationAmount"
@@ -119,7 +119,7 @@ const AddDonationCampaign = () => {
                             </div>
 
                             <div>
-                                <label className="block text-sm font-medium text-gray-700">Last Date of Donation</label>
+                                <label className="block text-sm font-medium text-gray-700 dark:text-white">Last Date of Donation</label>
                                 <input
                                     type="datetime-local"
                                     name="lastDate"
@@ -132,7 +132,7 @@ const AddDonationCampaign = () => {
                             </div>
 
                             <div>
-                                <label className="block text-sm font-medium text-gray-700">Short Description</label>
+                                <label className="block text-sm font-medium text-gray-700 dark:text-white">Short Description</label>
                                 <input
                                     type="text"
                                     name="shortDescription"
@@ -145,7 +145,7 @@ const AddDonationCampaign = () => {
                             </div>
 
                             <div>
-                                <label className="block text-sm font-medium text-gray-700">Long Description</label>
+                                <label className="block text-sm font-medium text-gray-700 dark:text-white">Long Description</label>
                                 <textarea
                                     name="longDescription"
                                     value={values.longDescription}

@@ -20,7 +20,7 @@ const MyDonationList = () => {
         <div>
             <Helmet><title>My Donation List</title></Helmet>
             <div>
-                <h2 className="text-3xl text-center py-4 mb-8 bg-gray-200">Total Payments: {donations.length}</h2>
+                <h2 className="text-3xl text-center py-4 mb-8 bg-gray-200 dark:bg-gray-800 dark:text-white">Total Payments: {donations.length}</h2>
                 <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
                     <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
                         <thead className="text-xs text-gray-700 uppercase dark:text-gray-400">

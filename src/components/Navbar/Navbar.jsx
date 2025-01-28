@@ -1,16 +1,30 @@
 import { Link, NavLink } from "react-router-dom";
 import logoImg from "../../assets/logo2.png";
 import useAuth from "../../hooks/useAuth";
+import { IoMoon, IoSunny } from "react-icons/io5";
 import { IoMdClose, IoMdMenu } from "react-icons/io";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const Navbar = () => {
     const { currentUser, logOutUser } = useAuth();
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
     const [menuOpen, setMenuOpen] = useState(false);
+    const [darkMode, setDarkMode] = useState(false);
 
     const toggleMenu = () => setMenuOpen(!menuOpen);
     const toggleDropdown = () => setIsDropdownOpen(!isDropdownOpen);
+
+    const toggleDarkMode = () => {
+        setDarkMode(!darkMode);
+    };
+
+    useEffect(() => {
+        if (localStorage.getItem('color-theme') === 'dark' || (darkMode)) {
+            document.documentElement.classList.add('dark');
+        } else {
+            document.documentElement.classList.remove('dark');
+        }
+    }, [darkMode]);
 
     const getNavLinkClass = ({ isActive }) =>
         isActive
@@ -33,7 +47,7 @@ const Navbar = () => {
     </>;
 
     return (
-        <nav className="bg-white border-gray-200 dark:bg-gray-900">
+        <div className="bg-white max-w-6xl w-full border-gray-200 dark:bg-gray-900">
             <div className="max-w-screen-xl flex items-center justify-between mx-auto p-4">
                 <div className="flex items-center rtl:space-x-reverse">
                     <img src={logoImg} className="w-16 md:w-20 h-10" alt="Flowbite Logo" />
@@ -85,6 +99,14 @@ const Navbar = () => {
                             </NavLink>
                         </div>
                     )}
+                    {/* Dark mode toggle button */}
+                    <button
+                        type="button"
+                        onClick={toggleDarkMode}
+                        className="text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 focus:outline-none focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 rounded-lg text-sm p-2.5 "
+                    >
+                        {darkMode ? <IoSunny className="w-5 h-5 ml-6" /> : <IoMoon className="w-5 h-5 ml-6" />}
+                    </button>
                     {/* Menu Icon */}
                     <button
                         data-collapse-toggle="navbar-user"
@@ -118,7 +140,7 @@ const Navbar = () => {
                     </ul>
                 </div>
             </div>
-        </nav >
+        </div >
     );
 };
 
