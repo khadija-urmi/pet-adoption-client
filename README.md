@@ -8,7 +8,7 @@ The purpose of **PetAdopt** is to create a simple and efficient platform where p
 
 ## Live URL
 
-Visit the live website here: [https://pet-adoption-web-aa89e.web.app](Pet Adoption)
+Visit the live website here: [https://pet-adoption-web-aa89e.web.app]
 
 ## Key Features
 
