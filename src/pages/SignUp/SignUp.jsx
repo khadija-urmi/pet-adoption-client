@@ -41,7 +41,6 @@ const SignUp = () => {
         try {
             await signUpNewUser(email, password);
             await updateUserProfile(name, imageURL);
-            console.log("User updated successfully");
 
             const userInfo = { name, email };
             axiosPublic.post('/users', userInfo)
