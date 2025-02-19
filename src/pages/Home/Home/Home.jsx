@@ -5,6 +5,7 @@ import About from "../About/About";
 import Features from "../Features/Features";
 import PetGallery from "../PetGallery/PetGallery";
 import Achievement from "../Achievement/Achievement";
+import Testimonial from "../Testimonial/Testimonial";
 
 const Home = () => {
   return (
@@ -20,8 +21,9 @@ const Home = () => {
         <AdoptPetAction></AdoptPetAction>
       </div>
       <Features></Features>
-      <PetGallery></PetGallery>
       <Achievement></Achievement>
+      <PetGallery></PetGallery>
+      <Testimonial></Testimonial>
     </>
   );
 };
