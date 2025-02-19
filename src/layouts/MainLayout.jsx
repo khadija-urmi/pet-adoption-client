@@ -6,7 +6,9 @@ const MainLayout = () => {
   return (
     <div>
       {/* <Toaster position="top-right" reverseOrder={false} /> */}
-      <div className="max-w-6xl mx-auto"><Navbar></Navbar></div>
+      <div className="bg-white dark:bg-gray-900">
+        <Navbar></Navbar>
+      </div>
       <Outlet />
       <Footer />
     </div>
