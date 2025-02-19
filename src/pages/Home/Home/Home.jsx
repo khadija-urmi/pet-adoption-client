@@ -6,6 +6,7 @@ import Features from "../Features/Features";
 import PetGallery from "../PetGallery/PetGallery";
 import Achievement from "../Achievement/Achievement";
 import Testimonial from "../Testimonial/Testimonial";
+import Newsletter from "../Newsletter/Newsletter";
 
 const Home = () => {
   return (
@@ -24,6 +25,7 @@ const Home = () => {
       <Achievement></Achievement>
       <PetGallery></PetGallery>
       <Testimonial></Testimonial>
+      <Newsletter></Newsletter>
     </>
   );
 };
