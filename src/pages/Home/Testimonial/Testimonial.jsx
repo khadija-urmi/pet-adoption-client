@@ -6,15 +6,15 @@ import backgroundPattern from "../../../assets/patternImg.png";
 const Testimonial = () => {
   return (
     <section
-      className="bg-gray-100 py-16 px-4 md:px-8"
+      className="py-16 px-4 md:px-8"
       style={{
         backgroundImage: `url(${backgroundPattern})`,
         backgroundRepeat: "repeat",
       }}
     >
-      <div className="text-center mb-12">
+      <div className="max-w-3xl mx-auto text-center mb-12">
         <h2 className="text-3xl font-semibold text-darkGreen">
-          Our Happy Pet Adopters
+          Our Happy Customer
         </h2>
         <p className="text-lg text-gray-600 mt-2">
           Pet adoption is not just about finding a pet, it&apos;s about giving
@@ -23,9 +23,9 @@ const Testimonial = () => {
         </p>
       </div>
 
-      <div className="flex justify-center items-center">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-8">
         {/* Testimonial Card 1 */}
-        <div className="bg-white p-6 rounded-lg shadow-lg max-w-xs mx-4 h-96 flex flex-col justify-between">
+        <div className="bg-white p-6 rounded-lg shadow-lg h-96 flex flex-col justify-between">
           <div className="flex justify-center mb-4">
             <img
               src={user1}
@@ -44,7 +44,7 @@ const Testimonial = () => {
         </div>
 
         {/* Testimonial Card 2 */}
-        <div className="bg-white p-6 rounded-lg shadow-lg max-w-xs mx-4 h-96 flex flex-col justify-between">
+        <div className="bg-white p-6 rounded-lg shadow-lg h-96 flex flex-col justify-between">
           <div className="flex justify-center mb-4">
             <img
               src={user2}
@@ -63,7 +63,7 @@ const Testimonial = () => {
         </div>
 
         {/* Testimonial Card 3 */}
-        <div className="bg-white p-6 rounded-lg shadow-lg max-w-xs mx-4 h-96 flex flex-col justify-between">
+        <div className="bg-white p-6 rounded-lg shadow-lg h-96 flex flex-col justify-between">
           <div className="flex justify-center mb-4">
             <img
               src={user1}
@@ -82,7 +82,7 @@ const Testimonial = () => {
         </div>
 
         {/* Testimonial Card 4 */}
-        <div className="bg-white p-6 rounded-lg shadow-lg max-w-xs mx-4 h-96 flex flex-col justify-between">
+        <div className="bg-white p-6 rounded-lg shadow-lg h-96 flex flex-col justify-between">
           <div className="flex justify-center mb-4">
             <img
               src={user2}

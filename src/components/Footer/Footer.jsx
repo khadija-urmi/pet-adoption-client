@@ -21,7 +21,7 @@ const Footer = () => {
             <h2 className="text-lg font-semibold text-gray-800 dark:text-white mt-4 mb-4">
               Follow Us
             </h2>
-            <div className="flex space-x-6">
+            <div className="flex space-x-6 justify-center sm:justify-start">
               <a
                 href="#"
                 className="text-gray-500 dark:text-gray-400 hover:text-blue-600"
@@ -42,6 +42,7 @@ const Footer = () => {
               </a>
             </div>
           </div>
+
           <div className="flex flex-col items-center sm:items-start">
             <h2 className="text-xl font-semibold text-gray-800 dark:text-white mb-4">
               Contact Us
@@ -59,6 +60,7 @@ const Footer = () => {
               </li>
             </ul>
           </div>
+
           <div className="flex flex-col items-center sm:items-start">
             <h2 className="text-xl font-semibold text-gray-800 dark:text-white mb-4">
               Services
@@ -72,11 +74,13 @@ const Footer = () => {
         </div>
 
         <hr className="my-6 border-gray-200 dark:border-gray-700" />
-        <div className="flex justify-between items-center">
-          <span className="text-sm text-gray-500 dark:text-gray-400">
+
+        {/* Footer Bottom Section */}
+        <div className="flex flex-col sm:flex-row justify-between items-center">
+          <span className="text-sm text-gray-500 dark:text-gray-400 text-center sm:text-left">
             © 2023 WoofWow™. All Rights Reserved.
           </span>
-          <div className="flex items-center space-x-6">
+          <div className="flex items-center space-x-6 mt-4 sm:mt-0">
             <a
               href="#"
               className="text-gray-500 dark:text-gray-400 hover:text-gray-900"
