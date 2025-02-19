@@ -10,6 +10,7 @@ import { IoSearchSharp } from "react-icons/io5";
 import NoDataFoundImg from "../../assets/noDataFound.png";
 import { Helmet } from "react-helmet-async";
 import useAxiosPublic from "../../hooks/useAxiosPublic";
+
 const PetListing = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const axiosPublic = useAxiosPublic();
@@ -30,7 +31,7 @@ const PetListing = () => {
 
   if (isLoading) {
     return (
-      <div className="flex justify-center items-center">
+      <div className="flex justify-center items-center h-screen">
         <ProgressBar
           visible={true}
           height="80"
@@ -43,6 +44,7 @@ const PetListing = () => {
       </div>
     );
   }
+
   return (
     <>
       <Helmet>
